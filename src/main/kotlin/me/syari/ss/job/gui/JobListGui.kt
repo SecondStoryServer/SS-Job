@@ -17,7 +17,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 
-object JobGui {
+object JobListGui {
     fun openList(player: Player, page: Int) {
         getByIndex(page)?.let {
             openList(player, page, it)

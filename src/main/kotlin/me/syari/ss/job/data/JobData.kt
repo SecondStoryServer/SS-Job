@@ -10,6 +10,7 @@ interface JobData {
     val description: String
     val availableWeaponType: Set<WeaponType>
     val requirements: Set<JobRequirement>?
+    val activeSkill: List<JobActiveSkill>
 
     companion object {
         val jobList = gradeList.flatMap { it.jobList.keys }

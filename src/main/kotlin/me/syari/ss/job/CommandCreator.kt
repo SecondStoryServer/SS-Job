@@ -13,7 +13,7 @@ import me.syari.ss.job.DatabaseConnector.JobExp
 import me.syari.ss.job.DatabaseConnector.JobPoint
 import me.syari.ss.job.DatabaseConnector.createTable
 import me.syari.ss.job.Main.Companion.jobPlugin
-import me.syari.ss.job.gui.JobGui
+import me.syari.ss.job.gui.JobListGui
 import me.syari.ss.job.player.PlayerData.Companion.jobData
 import org.bukkit.entity.Player
 
@@ -95,7 +95,7 @@ object CommandCreator : OnEnable {
                 }
                 "open" -> {
                     if (sender !is Player) return@createCommand sendError(ErrorMessage.OnlyPlayer)
-                    JobGui.openList(sender, 0)
+                    JobListGui.openList(sender, 0)
                 }
             }
         }

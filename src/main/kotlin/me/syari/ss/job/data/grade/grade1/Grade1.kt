@@ -1,4 +1,4 @@
-package me.syari.ss.job.data.grade1
+package me.syari.ss.job.data.grade.grade1
 
 import me.syari.ss.job.data.JobData
 import me.syari.ss.job.data.JobGrade
