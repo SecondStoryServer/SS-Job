@@ -8,18 +8,18 @@ import org.bukkit.OfflinePlayer
 data class PlayerStatus(val uuidPlayer: UUIDPlayer) {
     private val statusChangeList = mutableMapOf<StatusChangeCause, MutableList<StatusChange>>()
 
-    fun addChange(cause: StatusChangeCause, data: StatusChange) {
+    fun add(cause: StatusChangeCause, data: StatusChange) {
         statusChangeList.getOrPut(cause) { mutableListOf() }.add(data)
     }
 
-    fun addChange(cause: StatusChangeCause, data: StatusChange, effectTime: Int) {
-        addChange(cause, data)
+    fun add(cause: StatusChangeCause, data: StatusChange, effectTime: Int) {
+        add(cause, data)
         runLater(battlePlugin, effectTime.toLong()) {
             statusChangeList[cause]?.remove(data)
         }?.let { data.removeTask.add(it) }
     }
 
-    fun clearChange(cause: StatusChangeCause) {
+    fun clear(cause: StatusChangeCause) {
         statusChangeList[cause]?.forEach { it.cancelAllTask() }
         statusChangeList.clear()
     }
