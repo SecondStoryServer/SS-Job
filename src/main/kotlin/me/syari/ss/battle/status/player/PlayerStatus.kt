@@ -1,14 +1,18 @@
-package me.syari.ss.battle.status
+package me.syari.ss.battle.status.player
 
 import me.syari.ss.battle.Main.Companion.battlePlugin
+import me.syari.ss.battle.equipment.ElementType
+import me.syari.ss.battle.status.EntityStatus
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.scheduler.CustomScheduler.runLater
 import org.bukkit.OfflinePlayer
 
-class PlayerStatus {
-    private val statusChangeList = mutableMapOf<StatusChangeCause, MutableList<StatusChange>>()
+class PlayerStatus : EntityStatus {
+    private val statusChangeList = mutableMapOf<StatusChange.Cause, MutableList<StatusChange>>()
 
-    fun get(): Map<StatusType, Float> {
+    override var damageElementType: ElementType? = null
+
+    override fun get(): Map<StatusType, Float> {
         val status = defaultStatus.toMutableMap()
         val multi = mutableMapOf<StatusType, Float>()
         statusChangeList.values.forEach { list ->
@@ -18,8 +22,8 @@ class PlayerStatus {
                 }
 
                 when (statusChange.changeType) {
-                    StatusChangeType.Add -> status
-                    StatusChangeType.Multi -> multi
+                    StatusChange.Type.Add -> status
+                    StatusChange.Type.Multi -> multi
                 }.increase(statusChange.statusType, statusChange.value)
             }
         }
@@ -31,26 +35,26 @@ class PlayerStatus {
         return status
     }
 
-    private fun add(cause: StatusChangeCause, data: StatusChange) {
+    private fun add(cause: StatusChange.Cause, data: StatusChange) {
         statusChangeList.getOrPut(cause) { mutableListOf() }.add(data)
     }
 
-    private fun add(cause: StatusChangeCause, data: StatusChange, effectTime: Int) {
+    private fun add(cause: StatusChange.Cause, data: StatusChange, effectTime: Int) {
         add(cause, data)
         runLater(battlePlugin, effectTime.toLong()) {
             statusChangeList[cause]?.remove(data)
         }?.let { data.removeTask.add(it) }
     }
 
-    fun add(cause: StatusChangeCause, statusType: StatusType, value: Float, changeType: StatusChangeType) {
+    fun add(cause: StatusChange.Cause, statusType: StatusType, value: Float, changeType: StatusChange.Type) {
         add(cause, StatusChange(statusType, value, changeType))
     }
 
-    fun add(cause: StatusChangeCause, statusType: StatusType, value: Float, changeType: StatusChangeType, effectTime: Int) {
+    fun add(cause: StatusChange.Cause, statusType: StatusType, value: Float, changeType: StatusChange.Type, effectTime: Int) {
         add(cause, StatusChange(statusType, value, changeType), effectTime)
     }
 
-    fun clear(cause: StatusChangeCause) {
+    fun clear(cause: StatusChange.Cause) {
         statusChangeList[cause]?.forEach { it.cancelAllTask() }
         statusChangeList.clear()
     }

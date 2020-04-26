@@ -1,9 +1,8 @@
 package me.syari.ss.job.data.skill.base
 
-import me.syari.ss.battle.status.PlayerStatus.Companion.status
-import me.syari.ss.battle.status.StatusChangeCause
-import me.syari.ss.battle.status.StatusChangeType
-import me.syari.ss.battle.status.StatusType
+import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
+import me.syari.ss.battle.status.player.StatusChange
+import me.syari.ss.battle.status.player.StatusType
 import me.syari.ss.job.data.JobActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -17,10 +16,10 @@ class DamageUp(private val rank: Rank) : JobActiveSkill {
     override fun use(player: Player) {
         val playerStatus = player.status
         playerStatus.add(
-                StatusChangeCause.ActiveSkill,
+                StatusChange.Cause.ActiveSkill,
                 StatusType.BaseAttack,
                 rank.damageUp,
-                StatusChangeType.Multi,
+                StatusChange.Type.Multi,
                 rank.effectTime
         )
     }
