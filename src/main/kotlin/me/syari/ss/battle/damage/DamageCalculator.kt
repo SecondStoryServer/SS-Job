@@ -20,6 +20,11 @@ object DamageCalculator {
                     damage *= 1.5F
                 }
             }
+            attackerStatus[StatusType.MaxDamage]?.let { maxDamage ->
+                if (maxDamage < damage) {
+                    damage = maxDamage
+                }
+            }
             victim.entity.damage(damage.toDouble(), attacker.entity)
         }
     }
