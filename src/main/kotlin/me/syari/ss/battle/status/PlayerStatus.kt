@@ -5,7 +5,7 @@ import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.scheduler.CustomScheduler.runLater
 import org.bukkit.OfflinePlayer
 
-data class PlayerStatus(val uuidPlayer: UUIDPlayer) {
+class PlayerStatus {
     private val statusChangeList = mutableMapOf<StatusChangeCause, MutableList<StatusChange>>()
 
     fun get(): Map<StatusType, Float> {
@@ -56,7 +56,12 @@ data class PlayerStatus(val uuidPlayer: UUIDPlayer) {
                 StatusType.MoveSpeed to 0.2F
         )
 
+        private val statusMap = mutableMapOf<UUIDPlayer, PlayerStatus>()
+
         val OfflinePlayer.status
-            get() = PlayerStatus(UUIDPlayer(this))
+            get(): PlayerStatus {
+                val uuidPlayer = UUIDPlayer(this)
+                return statusMap.getOrPut(uuidPlayer) { PlayerStatus() }
+            }
     }
 }
