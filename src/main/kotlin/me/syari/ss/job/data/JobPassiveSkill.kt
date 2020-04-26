@@ -1,14 +1,13 @@
 package me.syari.ss.job.data
 
+import me.syari.ss.battle.status.player.PlayerStatus
 import org.bukkit.Material
-import org.bukkit.entity.Player
 
-interface JobActiveSkill {
+interface JobPassiveSkill {
     val icon: Material
     val display: String
     val description: String
-    val coolTime: Int
     val needLevel: Int
     val extraSkill: Boolean
-    fun use(player: Player)
+    fun apply(playerStatus: PlayerStatus)
 }

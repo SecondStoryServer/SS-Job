@@ -11,6 +11,7 @@ interface JobData {
     val availableWeaponType: Set<WeaponType>
     val requirements: Set<JobRequirement>?
     val activeSkill: List<JobActiveSkill>
+    val passiveSkill: List<JobPassiveSkill>
 
     companion object {
         val jobList = gradeList.flatMap { it.jobList.keys }

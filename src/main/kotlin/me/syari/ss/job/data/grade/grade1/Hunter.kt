@@ -1,9 +1,6 @@
 package me.syari.ss.job.data.grade.grade1
 
-import me.syari.ss.job.data.JobActiveSkill
-import me.syari.ss.job.data.JobData
-import me.syari.ss.job.data.JobRequirement
-import me.syari.ss.job.data.WeaponType
+import me.syari.ss.job.data.*
 import org.bukkit.Material
 
 object Hunter : JobData {
@@ -16,9 +13,12 @@ object Hunter : JobData {
     """.trimIndent()
     override val availableWeaponType = setOf(WeaponType.Bow, WeaponType.Knife)
     override val requirements = setOf(
-            JobRequirement.Point(5)
+        JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
+
+    )
+    override val passiveSkill = listOf<JobPassiveSkill>(
 
     )
 }

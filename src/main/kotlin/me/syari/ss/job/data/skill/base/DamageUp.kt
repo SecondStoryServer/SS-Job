@@ -12,15 +12,17 @@ class DamageUp(private val rank: Rank) : JobActiveSkill {
     override val display = "&c攻撃上昇&6〈${rank.display}〉"
     override val description = "自身の攻撃力を${String.format("%.1f", rank.damageUp)}倍に上昇させる"
     override val coolTime = rank.coolTime
+    override val needLevel = 1
+    override val extraSkill = true
 
     override fun use(player: Player) {
         val playerStatus = player.status
         playerStatus.add(
-                StatusChange.Cause.ActiveSkill,
-                StatusType.BaseAttack,
-                rank.damageUp,
-                StatusChange.Type.Multi,
-                rank.effectTime
+            StatusChange.Cause.ActiveSkill,
+            StatusType.BaseAttack,
+            rank.damageUp,
+            StatusChange.Type.Multi,
+            rank.effectTime
         )
     }
 
