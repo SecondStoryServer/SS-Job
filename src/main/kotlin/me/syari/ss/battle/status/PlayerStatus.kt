@@ -8,6 +8,29 @@ import org.bukkit.OfflinePlayer
 data class PlayerStatus(val uuidPlayer: UUIDPlayer) {
     private val statusChangeList = mutableMapOf<StatusChangeCause, MutableList<StatusChange>>()
 
+    fun get(): Map<StatusType, Float> {
+        val status = defaultStatus.toMutableMap()
+        val multi = mutableMapOf<StatusType, Float>()
+        statusChangeList.values.forEach { list ->
+            list.forEach { statusChange ->
+                fun MutableMap<StatusType, Float>.increase(type: StatusType, value: Float) {
+                    put(type, getOrDefault(type, 0F) + value)
+                }
+
+                when (statusChange.changeType) {
+                    StatusChangeType.Add -> status
+                    StatusChangeType.Multi -> multi
+                }.increase(statusChange.statusType, statusChange.value)
+            }
+        }
+        multi.forEach { (type, value) ->
+            status[type]?.let {
+                status[type] = it * value
+            }
+        }
+        return status
+    }
+
     fun add(cause: StatusChangeCause, data: StatusChange) {
         statusChangeList.getOrPut(cause) { mutableListOf() }.add(data)
     }
@@ -25,6 +48,14 @@ data class PlayerStatus(val uuidPlayer: UUIDPlayer) {
     }
 
     companion object {
+        private val defaultStatus = mapOf(
+                StatusType.BaseAttack to 1F,
+                StatusType.MaxDamage to 1F,
+                StatusType.MaxHealth to 20F,
+                StatusType.RegenHealth to 1F,
+                StatusType.MoveSpeed to 0.2F
+        )
+
         val OfflinePlayer.status
             get() = PlayerStatus(UUIDPlayer(this))
     }
