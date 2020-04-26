@@ -1,7 +1,6 @@
 package me.syari.ss.job.data.skill.base
 
 import me.syari.ss.battle.status.PlayerStatus.Companion.status
-import me.syari.ss.battle.status.StatusChange
 import me.syari.ss.battle.status.StatusChangeCause
 import me.syari.ss.battle.status.StatusChangeType
 import me.syari.ss.battle.status.StatusType
@@ -18,12 +17,10 @@ class DamageUp(private val rank: Rank) : JobActiveSkill {
     override fun use(player: Player) {
         val playerStatus = player.status
         playerStatus.add(
-                StatusChangeCause.Skill,
-                StatusChange(
-                        StatusType.BaseAttack,
-                        rank.damageUp,
-                        StatusChangeType.Multi
-                ),
+                StatusChangeCause.ActiveSkill,
+                StatusType.BaseAttack,
+                rank.damageUp,
+                StatusChangeType.Multi,
                 rank.effectTime
         )
     }

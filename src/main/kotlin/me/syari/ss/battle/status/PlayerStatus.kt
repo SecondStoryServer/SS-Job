@@ -25,21 +25,29 @@ class PlayerStatus {
         }
         multi.forEach { (type, value) ->
             status[type]?.let {
-                status[type] = it * value
+                status[type] = it * (1 + value)
             }
         }
         return status
     }
 
-    fun add(cause: StatusChangeCause, data: StatusChange) {
+    private fun add(cause: StatusChangeCause, data: StatusChange) {
         statusChangeList.getOrPut(cause) { mutableListOf() }.add(data)
     }
 
-    fun add(cause: StatusChangeCause, data: StatusChange, effectTime: Int) {
+    private fun add(cause: StatusChangeCause, data: StatusChange, effectTime: Int) {
         add(cause, data)
         runLater(battlePlugin, effectTime.toLong()) {
             statusChangeList[cause]?.remove(data)
         }?.let { data.removeTask.add(it) }
+    }
+
+    fun add(cause: StatusChangeCause, statusType: StatusType, value: Float, changeType: StatusChangeType) {
+        add(cause, StatusChange(statusType, value, changeType))
+    }
+
+    fun add(cause: StatusChangeCause, statusType: StatusType, value: Float, changeType: StatusChangeType, effectTime: Int) {
+        add(cause, StatusChange(statusType, value, changeType), effectTime)
     }
 
     fun clear(cause: StatusChangeCause) {

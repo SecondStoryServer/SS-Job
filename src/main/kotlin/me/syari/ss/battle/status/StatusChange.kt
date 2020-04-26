@@ -1,4 +1,5 @@
 package me.syari.ss.battle.status
+
 import me.syari.ss.core.scheduler.CustomTask
 
 data class StatusChange(
