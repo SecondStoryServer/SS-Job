@@ -34,7 +34,7 @@ object DatabaseConnector : OnEnable {
             var exp: Int? = null
             sql?.use {
                 val result =
-                    executeQuery("SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;")
+                        executeQuery("SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;")
                 if (result.next()) {
                     exp = result.getInt(1)
                 }

@@ -1,8 +1,8 @@
 package me.syari.ss.job.data
 
 enum class WeaponType(
-    val id: String,
-    val display: String
+        val id: String,
+        val display: String
 ) {
     Sword("sword", "剣"),
     Axe("axe", "斧"),

@@ -13,7 +13,7 @@ object Wizard : JobData {
     override val description = "遠距離から魔法を放つジョブ"
     override val availableWeaponType = setOf(WeaponType.Wand)
     override val requirements = setOf(
-        JobRequirement.Point(5)
+            JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
 

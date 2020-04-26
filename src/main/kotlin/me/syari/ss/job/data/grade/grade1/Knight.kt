@@ -13,7 +13,7 @@ object Knight : JobData {
     override val description = "攻撃と防御のバランスが取れたジョブ"
     override val availableWeaponType = setOf(WeaponType.Sword)
     override val requirements = setOf(
-        JobRequirement.Point(5)
+            JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
 

@@ -4,12 +4,11 @@ import me.syari.ss.battle.status.PlayerStatus.Companion.status
 import me.syari.ss.battle.status.StatusChange
 import me.syari.ss.battle.status.StatusChangeCause
 import me.syari.ss.battle.status.StatusChangeType
-import me.syari.ss.battle.status.StatusType
 import me.syari.ss.job.data.JobActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class DamageUp(private val rank: Rank): JobActiveSkill {
+class DamageUp(private val rank: Rank) : JobActiveSkill {
     override val icon = Material.BLAZE_POWDER
     override val display = "&c攻撃上昇&6〈${rank.display}〉"
     override val description = "自身の攻撃力を${String.format("%.1f", rank.damageUp)}倍に上昇させる"
@@ -18,14 +17,13 @@ class DamageUp(private val rank: Rank): JobActiveSkill {
     override fun use(player: Player) {
         val playerStatus = player.status
         playerStatus.addChange(
-            StatusChangeCause.Skill,
-            StatusChange(
-                null,
-                StatusType.Attack,
-                rank.damageUp,
-                StatusChangeType.Multi
-            ),
-            rank.effectTime
+                StatusChangeCause.Skill,
+                StatusChange.Base(
+                        StatusChange.Base.Type.Attack,
+                        rank.damageUp,
+                        StatusChangeType.Multi
+                ),
+                rank.effectTime
         )
     }
 

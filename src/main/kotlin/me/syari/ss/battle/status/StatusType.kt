@@ -1,6 +1,14 @@
 package me.syari.ss.battle.status
 
 enum class StatusType {
-    Attack,
-    Defense
+    BaseAttack,
+    BaseDefense,
+    ElementAttack,
+    ElementDefense,
+    CriticalDamage,
+    CriticalChance,
+    MaxDamage,
+    MaxHealth,
+    RegenHealth,
+    MoveSpeed,
 }

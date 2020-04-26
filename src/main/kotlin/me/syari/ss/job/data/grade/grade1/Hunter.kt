@@ -16,7 +16,7 @@ object Hunter : JobData {
     """.trimIndent()
     override val availableWeaponType = setOf(WeaponType.Bow, WeaponType.Knife)
     override val requirements = setOf(
-        JobRequirement.Point(5)
+            JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
 

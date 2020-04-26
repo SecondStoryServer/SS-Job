@@ -20,11 +20,11 @@ import org.bukkit.entity.Player
 object CommandCreator : OnEnable {
     override fun onEnable() {
         createCommand(jobPlugin, "job", "Job",
-            tab { _, _ -> element("config", "database", "point", "open") },
-            tab("config") { _, _ -> element("reload") },
-            tab("database") { _, _ -> element("check", "delete", "clear") },
-            tab("point") { _, _ -> element("give", "get") },
-            tab("database delete", "point give") { _, _ -> offlinePlayers }
+                tab { _, _ -> element("config", "database", "point", "open") },
+                tab("config") { _, _ -> element("reload") },
+                tab("database") { _, _ -> element("check", "delete", "clear") },
+                tab("point") { _, _ -> element("give", "get") },
+                tab("database delete", "point give") { _, _ -> offlinePlayers }
         ) { sender, args ->
             when (args.whenIndex(0)) {
                 "config" -> {
@@ -78,7 +78,7 @@ object CommandCreator : OnEnable {
                         "get" -> {
                             if (sender !is Player) return@createCommand sendError(ErrorMessage.OnlyPlayer)
                             val point =
-                                args.getOrNull(2)?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
+                                    args.getOrNull(2)?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
                             val jobData = sender.jobData
                             jobData.jobPoint += point
                             sendWithPrefix("&fジョブポイントを &a$point &f取得し &a${jobData.jobPoint} &fになりました")
@@ -86,7 +86,7 @@ object CommandCreator : OnEnable {
                         "give" -> {
                             val player = args.getOfflinePlayer(2, true) ?: return@createCommand
                             val point =
-                                args.getOrNull(3)?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
+                                    args.getOrNull(3)?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
                             val jobData = player.jobData
                             jobData.jobPoint += point
                             sendWithPrefix("&fジョブポイントを &a${player.name} &fに &a$point &f渡し &a${jobData.jobPoint} &fになりました")

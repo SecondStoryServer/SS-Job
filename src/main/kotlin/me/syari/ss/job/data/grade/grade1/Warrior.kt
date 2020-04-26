@@ -14,9 +14,9 @@ object Warrior : JobData {
     override val description = "高い攻撃力で戦闘を行うジョブ"
     override val availableWeaponType = setOf(WeaponType.Sword, WeaponType.Axe)
     override val requirements = setOf(
-        JobRequirement.Point(5)
+            JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
-        DamageUp(DamageUp.Rank.Small)
+            DamageUp(DamageUp.Rank.Small)
     )
 }

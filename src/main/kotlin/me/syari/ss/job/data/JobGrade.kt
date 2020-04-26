@@ -8,7 +8,7 @@ interface JobGrade {
 
     companion object {
         val gradeList = listOf(
-            Grade1
+                Grade1
         )
 
         fun getByIndex(index: Int): JobGrade? {
