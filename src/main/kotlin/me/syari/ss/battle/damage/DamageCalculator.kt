@@ -1,20 +1,21 @@
 package me.syari.ss.battle.damage
 
 import me.syari.ss.battle.equipment.ElementType
+import me.syari.ss.battle.status.EntityStatus
 import me.syari.ss.battle.status.player.StatusType
 import kotlin.random.Random
 
 object DamageCalculator {
-    fun attack(attacker: DamageEventEntity, victim: DamageEventEntity) {
-        val damageElementType = attacker.status.damageElementType
-        val attackerStatus = attacker.status.get()
-        val victimStatus = victim.status.get()
+    fun getDamage(attacker: EntityStatus, victim: EntityStatus): Float {
+        val damageElementType = attacker.damageElementType
+        val attackerStatus = victim.get()
+        val victimStatus = victim.get()
         var damage = if (damageElementType != null) {
             getAttack(damageElementType, attackerStatus) - getDefense(damageElementType, victimStatus)
         } else {
             getAttack(attackerStatus) ?: 0F
         }
-        if (0F < damage) {
+        return if (0F < damage) {
             attackerStatus[StatusType.CriticalChance]?.let { chance ->
                 if (Random.nextFloat() < chance) {
                     damage *= 1.5F
@@ -25,8 +26,8 @@ object DamageCalculator {
                     damage = maxDamage
                 }
             }
-            victim.entity.damage(damage.toDouble(), attacker.entity)
-        }
+            damage
+        } else 0F
     }
 
     private fun getDefense(damageElementType: ElementType, victimStatus: Map<StatusType, Float>): Float {
