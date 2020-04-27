@@ -24,9 +24,7 @@ object JobListGui {
     ) {
         getByIndex(page)?.let {
             openList(
-                player,
-                page,
-                it
+                player, page, it
             )
         }
     }
@@ -37,55 +35,36 @@ object JobListGui {
         grade: JobGrade
     ) {
         inventory(
-            "&9&lジョブ一覧 &7- &9&l${grade.groupName}",
-            2,
-            "job",
-            "list",
-            grade.groupName
+            "&9&lジョブ一覧 &7- &9&l${grade.groupName}", 2, "job", "list", grade.groupName
         ) {
             grade.jobList.forEach { (job, slot) ->
                 setJobItem(
-                    slot,
-                    player,
-                    job,
-                    page,
-                    grade
+                    slot, player, job, page, grade
                 )
             }
             item(
-                9..17,
-                Material.GRAY_STAINED_GLASS_PANE
+                9..17, Material.GRAY_STAINED_GLASS_PANE
             )
             getByIndex(page - 1)?.let {
                 item(
-                    9,
-                    Material.BOOK,
-                    "&6前のページ"
+                    9, Material.BOOK, "&6前のページ"
                 ).event {
                     openList(
-                        player,
-                        page - 1,
-                        it
+                        player, page - 1, it
                     )
                 }
             }
             item(
-                13,
-                Material.BARRIER,
-                "&c閉じる"
+                13, Material.BARRIER, "&c閉じる"
             ).event {
                 close(player)
             }
             getByIndex(page + 1)?.let {
                 item(
-                    17,
-                    Material.BOOK,
-                    "&6次のページ"
+                    17, Material.BOOK, "&6次のページ"
                 ).event {
                     openList(
-                        player,
-                        page + 1,
-                        it
+                        player, page + 1, it
                     )
                 }
             }
@@ -102,23 +81,22 @@ object JobListGui {
         val playerData = player.jobData
         val playerJob = playerData.getJob(jobData)
         val icon = CustomItemStack.create(
-            jobData.icon,
-            "&6${jobData.display}",
-            buildString {
-                appendln("&7&m-------------&d 説明 &7&m-------------")
-                jobData.description.lines().forEach {
-                    appendln("&b$it")
-                }
+            jobData.icon, "&6${jobData.display}", buildString {
+                appendln("&7&m----&d 説明 &7&m----")
+                jobData.description.lines()
+                    .forEach {
+                        appendln("&b$it")
+                    }
                 appendln()
-                appendln("&7&m-------------&d 武器 &7&m-------------")
+                appendln("&7&m----&d 武器 &7&m----")
                 appendln("&a${jobData.availableWeaponType.joinToString(separator = "・") { it.display }}")
                 appendln()
                 if (playerData.isAvailableJob(jobData)) {
-                    appendln("&7&m-------------&d 情報 &7&m-------------")
+                    appendln("&7&m----&d 情報 &7&m----")
                     append("&7現在のレベル: &a${playerJob.level} &7/ &a$maxLevel")
                     appendln()
                 } else {
-                    appendln("&7&m-------------&d 条件 &7&m-------------")
+                    appendln("&7&m----&d 条件 &7&m----")
                     jobData.requirements?.let {
                         it.forEach { req ->
                             append(if (req.has(playerData)) "&a" else "&c")
@@ -133,19 +111,18 @@ object JobListGui {
                     append("&6このジョブに変更する")
                 }
             }.lines()
-        ).apply {
-            if (playerJob.isActive) {
-                addEnchant(
-                    Enchantment.DURABILITY,
-                    0
-                )
-                addItemFlag(ItemFlag.HIDE_ENCHANTS)
+        )
+            .apply {
+                if (playerJob.isActive) {
+                    addEnchant(
+                        Enchantment.DURABILITY, 0
+                    )
+                    addItemFlag(ItemFlag.HIDE_ENCHANTS)
+                }
+                addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
             }
-            addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
-        }
         item(
-            slot,
-            icon
+            slot, icon
         ).event {
             when {
                 playerJob.isActive -> {
@@ -153,75 +130,38 @@ object JobListGui {
                 }
                 playerJob.isAvailable -> {
                     changeJob(
-                        player,
-                        jobData,
-                        playerData,
-                        playerJob
+                        player, jobData, playerData, playerJob
                     )
                     playerData.updateExpBar()
                 }
                 playerJob.canGet -> {
                     inventory(
-                        "&9&lジョブ変更 &7- &9&l${jobData.display}",
-                        2,
-                        "job",
-                        "list",
-                        grade.groupName,
-                        jobData.id
+                        "&9&lジョブ変更 &7- &9&l${jobData.display}", 2, "job", "list", grade.groupName, jobData.id
                     ) {
-                        for (index in listOf(
-                            0,
-                            1,
-                            2,
-                            3,
-                            9,
-                            10,
-                            11,
-                            12
-                        )) {
-                            item(
-                                index,
-                                Material.LIME_STAINED_GLASS_PANE,
-                                "&a変更する"
-                            ).event {
-                                changeJob(
-                                    player,
-                                    jobData,
-                                    playerData,
-                                    playerJob
-                                )
-                                jobData.requirements?.forEach {
-                                    it.use(playerData)
-                                }
-                                playerData.getJob(jobData).exp = 0
+                        item(
+                            listOf(
+                                0, 1, 2, 3, 9, 10, 11, 12
+                            ), Material.LIME_STAINED_GLASS_PANE, "&a変更する"
+                        ).event {
+                            changeJob(
+                                player, jobData, playerData, playerJob
+                            )
+                            jobData.requirements?.forEach {
+                                it.use(playerData)
                             }
+                            playerData.getJob(jobData).exp = 0
                         }
                         item(
-                            4,
-                            13,
-                            material = Material.GRAY_STAINED_GLASS_PANE
+                            4, 13, material = Material.GRAY_STAINED_GLASS_PANE
                         )
-                        for (index in listOf(
-                            5,
-                            6,
-                            7,
-                            8,
-                            14,
-                            15,
-                            16,
-                            17
-                        )) {
-                            item(
-                                index,
-                                Material.RED_STAINED_GLASS_PANE,
-                                "&cやめる"
-                            ).event {
-                                openList(
-                                    player,
-                                    page,
-                                    grade
-                                )
-                            }
+                        item(
+                            listOf(
+                                5, 6, 7, 8, 14, 15, 16, 17
+                            ), Material.RED_STAINED_GLASS_PANE, "&cやめる"
+                        ).event {
+                            openList(
+                                player, page, grade
+                            )
                         }
                     }.open(player)
                 }
@@ -237,11 +177,7 @@ object JobListGui {
     ) {
         close(player)
         player.title(
-            "&6&l&n${jobData.display}",
-            "&f&lジョブを変更しました",
-            5,
-            30,
-            10
+            "&6&l&n${jobData.display}", "&f&lジョブを変更しました", 5, 30, 10
         )
         playerData.activeJob = playerJob
     }

@@ -5,28 +5,22 @@ enum class WeaponType(
     val display: String
 ) {
     Sword(
-        "sword",
-        "剣"
+        "sword", "剣"
     ),
     Axe(
-        "axe",
-        "斧"
+        "axe", "斧"
     ),
     Bow(
-        "bow",
-        "弓"
+        "bow", "弓"
     ),
     Knife(
-        "knife",
-        "短剣"
+        "knife", "短剣"
     ),
     Wand(
-        "wand",
-        "杖"
+        "wand", "杖"
     ),
     Mace(
-        "mace",
-        "棍"
+        "mace", "棍"
     );
 
     companion object {

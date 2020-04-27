@@ -4,21 +4,17 @@ import me.syari.ss.job.DatabaseConnector
 import me.syari.ss.job.data.JobData
 
 data class PlayerJob(
-    val playerData: PlayerData,
-    val data: JobData
+    val playerData: PlayerData, val data: JobData
 ) {
     var exp: Int?
         get() {
             return DatabaseConnector.JobExp.get(
-                playerData.uuidPlayer,
-                data.id
+                playerData.uuidPlayer, data.id
             )
         }
         set(value) {
             DatabaseConnector.JobExp.set(
-                playerData.uuidPlayer,
-                data.id,
-                value
+                playerData.uuidPlayer, data.id, value
             )
             playerData.updateExpBar()
         }

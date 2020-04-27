@@ -11,11 +11,5 @@ open class PassiveStatusUpMulti(
     override val needLevel: Int,
     override val extraSkill: Boolean
 ): PassiveStatusUp(
-    statusType,
-    icon,
-    percent,
-    StatusChange.Type.Multi,
-    needLevel,
-    extraSkill,
-    "+${percent * 100}%"
+    statusType, icon, percent, StatusChange.Type.Multi, needLevel, extraSkill, "+${percent * 100}%"
 )

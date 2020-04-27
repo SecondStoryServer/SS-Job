@@ -25,48 +25,19 @@ object Knight: JobData {
     )
     override val passiveSkill = listOf(
         PassiveStatusUpAdd(
-            StatusType.BaseDefense,
-            Material.LEATHER_CHESTPLATE,
-            3F,
-            1
-        ),
-        PassiveStatusUpAdd(
-            StatusType.BaseDefense,
-            Material.LEATHER_CHESTPLATE,
-            3F,
-            5
-        ),
-        PassiveStatusUpAdd(
-            StatusType.MaxHealth,
-            Material.GLISTERING_MELON_SLICE,
-            4F,
-            10
-        ),
-        PassiveStatusUpAdd(
-            StatusType.BaseDefense,
-            Material.LEATHER_CHESTPLATE,
-            3F,
-            15,
-            true
-        ),
-        PassiveStatusUpAdd(
-            StatusType.MaxHealth,
-            Material.GLISTERING_MELON_SLICE,
-            4F,
-            20
-        ),
-        PassiveStatusUpAdd(
-            StatusType.BaseDefense,
-            Material.LEATHER_CHESTPLATE,
-            3F,
-            25
-        ),
-        PassiveStatusUpMulti(
-            StatusType.BaseDefense,
-            Material.LEATHER_CHESTPLATE,
-            0.05F,
-            30,
-            true
+            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 1
+        ), PassiveStatusUpAdd(
+            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 5
+        ), PassiveStatusUpAdd(
+            StatusType.MaxHealth, Material.GLISTERING_MELON_SLICE, 4F, 10
+        ), PassiveStatusUpAdd(
+            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 15, true
+        ), PassiveStatusUpAdd(
+            StatusType.MaxHealth, Material.GLISTERING_MELON_SLICE, 4F, 20
+        ), PassiveStatusUpAdd(
+            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 25
+        ), PassiveStatusUpMulti(
+            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 0.05F, 30, true
         )
     )
 }

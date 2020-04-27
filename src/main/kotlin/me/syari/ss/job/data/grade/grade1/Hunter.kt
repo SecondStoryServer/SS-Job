@@ -16,8 +16,7 @@ object Hunter: JobData {
         トリッキーな立ち回りが出来るジョブ
     """.trimIndent()
     override val availableWeaponType = setOf(
-        WeaponType.Bow,
-        WeaponType.Knife
+        WeaponType.Bow, WeaponType.Knife
     )
     override val requirements = setOf(
         JobRequirement.Point(5)
