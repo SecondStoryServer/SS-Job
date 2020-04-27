@@ -10,6 +10,10 @@ class Main: JavaPlugin() {
 
     override fun onEnable() {
         jobPlugin = this
-        OnEnable.register(ConfigLoader, DatabaseConnector, CommandCreator)
+        OnEnable.register(
+            ConfigLoader,
+            DatabaseConnector,
+            CommandCreator
+        )
     }
 }

@@ -24,7 +24,11 @@ open class ActiveStatusUp(
 
     override fun use(player: Player) {
         player.status.add(
-            StatusChange.Cause.ActiveSkill, statusType, value, changeType, effectTime
+            StatusChange.Cause.ActiveSkill,
+            statusType,
+            value,
+            changeType,
+            effectTime
         )
     }
 }

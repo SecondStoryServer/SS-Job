@@ -22,11 +22,38 @@ object CommandCreator: OnEnable {
         createCommand(jobPlugin,
             "job",
             "Job",
-            tab { _, _ -> element("config", "database", "point", "open") },
-            tab("config") { _, _ -> element("reload") },
-            tab("database") { _, _ -> element("check", "delete", "clear") },
-            tab("point") { _, _ -> element("give", "get") },
-            tab("database delete", "point give") { _, _ -> offlinePlayers }) { sender, args ->
+            tab { _, _ ->
+                element(
+                    "config",
+                    "database",
+                    "point",
+                    "open"
+                )
+            },
+            tab("config") { _, _ ->
+                element(
+                    "reload"
+                )
+            },
+            tab("database") { _, _ ->
+                element(
+                    "check",
+                    "delete",
+                    "clear"
+                )
+            },
+            tab("point") { _, _ ->
+                element(
+                    "give",
+                    "get"
+                )
+            },
+            tab(
+                "database delete",
+                "point give"
+            ) { _, _ ->
+                offlinePlayers
+            }) { sender, args ->
             when (args.whenIndex(0)) {
                 "config" -> {
                     when (args.whenIndex(1)) {
@@ -57,7 +84,10 @@ object CommandCreator: OnEnable {
                         "cache" -> {
                             when (args.whenIndex(2)) {
                                 "delete" -> {
-                                    val player = args.getOfflinePlayer(3, false) ?: return@createCommand
+                                    val player = args.getOfflinePlayer(
+                                        3,
+                                        false
+                                    ) ?: return@createCommand
                                     val uuidPlayer = UUIDPlayer(player)
                                     JobExp.deleteCache(uuidPlayer)
                                     ActiveJob.deleteCache(uuidPlayer)
@@ -78,16 +108,19 @@ object CommandCreator: OnEnable {
                     when (args.whenIndex(1)) {
                         "get" -> {
                             if (sender !is Player) return@createCommand sendError(ErrorMessage.OnlyPlayer)
-                            val point = args.getOrNull(2)
-                                ?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
+                            val point = args.getOrNull(2)?.toIntOrNull()
+                                ?: return@createCommand sendError("ポイント入力してください")
                             val jobData = sender.jobData
                             jobData.jobPoint += point
                             sendWithPrefix("&fジョブポイントを &a$point &f取得し &a${jobData.jobPoint} &fになりました")
                         }
                         "give" -> {
-                            val player = args.getOfflinePlayer(2, true) ?: return@createCommand
-                            val point = args.getOrNull(3)
-                                ?.toIntOrNull() ?: return@createCommand sendError("ポイント入力してください")
+                            val player = args.getOfflinePlayer(
+                                2,
+                                true
+                            ) ?: return@createCommand
+                            val point = args.getOrNull(3)?.toIntOrNull()
+                                ?: return@createCommand sendError("ポイント入力してください")
                             val jobData = player.jobData
                             jobData.jobPoint += point
                             sendWithPrefix("&fジョブポイントを &a${player.name} &fに &a$point &f渡し &a${jobData.jobPoint} &fになりました")
@@ -96,7 +129,10 @@ object CommandCreator: OnEnable {
                 }
                 "open" -> {
                     if (sender !is Player) return@createCommand sendError(ErrorMessage.OnlyPlayer)
-                    JobListGui.openList(sender, 0)
+                    JobListGui.openList(
+                        sender,
+                        0
+                    )
                 }
             }
         }

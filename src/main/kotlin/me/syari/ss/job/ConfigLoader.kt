@@ -13,8 +13,15 @@ object ConfigLoader: OnEnable {
     }
 
     fun loadConfig(output: CommandSender) {
-        config(jobPlugin, output, "config.yml") {
-            DatabaseConnector.sql = get("sql", ConfigDataType.MYSQL)
+        config(
+            jobPlugin,
+            output,
+            "config.yml"
+        ) {
+            DatabaseConnector.sql = get(
+                "sql",
+                ConfigDataType.MYSQL
+            )
         }
     }
 }

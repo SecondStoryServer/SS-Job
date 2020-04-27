@@ -15,28 +15,64 @@ object Warrior: JobData {
     override val display = "ウォーリア"
     override val icon = Material.IRON_SWORD
     override val description = "高い攻撃力で戦闘を行うジョブ"
-    override val availableWeaponType = setOf(WeaponType.Sword, WeaponType.Axe)
+    override val availableWeaponType = setOf(
+        WeaponType.Sword,
+        WeaponType.Axe
+    )
     override val requirements = setOf(
         JobRequirement.Point(5)
     )
     override val activeSkill = listOf<JobActiveSkill>(
-        ActiveBaseAttackUp(ActiveBaseAttackUp.Rank.Small)
+        ActiveBaseAttackUp(
+            ActiveBaseAttackUp.Rank.Small,
+            1,
+            true
+        )
     )
     override val passiveSkill = listOf(
         PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 1
-        ), PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 5
-        ), PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 10
-        ), PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 15, true
-        ), PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 20
-        ), PassiveStatusUpAdd(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 3F, 25
-        ), PassiveStatusUpMulti(
-            StatusType.BaseAttack, Material.BLAZE_POWDER, 0.05F, 30, true
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            1
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            5
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            10
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            15,
+            true
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            20
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            3F,
+            25
+        ),
+        PassiveStatusUpMulti(
+            StatusType.BaseAttack,
+            Material.BLAZE_POWDER,
+            0.05F,
+            30,
+            true
         )
     )
 }

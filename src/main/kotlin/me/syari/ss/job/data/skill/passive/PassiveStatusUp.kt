@@ -19,7 +19,10 @@ open class PassiveStatusUp(
 
     override fun apply(playerStatus: PlayerStatus) {
         playerStatus.add(
-            StatusChange.Cause.PassiveSkill, statusType, value, changeType
+            StatusChange.Cause.PassiveSkill,
+            statusType,
+            value,
+            changeType
         )
     }
 }

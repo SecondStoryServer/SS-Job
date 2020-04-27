@@ -7,9 +7,7 @@ interface JobGrade {
     val jobList: Map<JobData, Int>
 
     companion object {
-        val gradeList = listOf(
-            Grade1
-        )
+        val gradeList = listOf(Grade1)
 
         fun getByIndex(index: Int): JobGrade? {
             return gradeList.getOrNull(index)

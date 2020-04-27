@@ -10,21 +10,33 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
         get() {
             return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let { id ->
                 JobData.getById(id)?.let {
-                    PlayerJob(this, it)
+                    PlayerJob(
+                        this,
+                        it
+                    )
                 }
             }
         }
         set(value) {
-            DatabaseConnector.ActiveJob.set(uuidPlayer, value?.data?.id)
+            DatabaseConnector.ActiveJob.set(
+                uuidPlayer,
+                value?.data?.id
+            )
         }
 
     fun getJob(data: JobData): PlayerJob {
-        return PlayerJob(this, data)
+        return PlayerJob(
+            this,
+            data
+        )
     }
 
     var jobPoint: Int
         set(value) {
-            DatabaseConnector.JobPoint.set(uuidPlayer, value)
+            DatabaseConnector.JobPoint.set(
+                uuidPlayer,
+                value
+            )
         }
         get() {
             return DatabaseConnector.JobPoint.get(uuidPlayer)
@@ -41,7 +53,10 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
     fun updateExpBar() {
         uuidPlayer.player?.let { player ->
             activeJob?.let { activeJob ->
-                player.sendExperienceChange(activeJob.levelProgress, activeJob.level ?: 0)
+                player.sendExperienceChange(
+                    activeJob.levelProgress,
+                    activeJob.level ?: 0
+                )
             }
         }
     }

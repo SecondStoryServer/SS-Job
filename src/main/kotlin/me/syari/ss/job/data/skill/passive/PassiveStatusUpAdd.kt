@@ -11,5 +11,11 @@ open class PassiveStatusUpAdd(
     override val needLevel: Int,
     override val extraSkill: Boolean = false
 ): PassiveStatusUp(
-    statusType, icon, add, StatusChange.Type.Add, needLevel, extraSkill, "+$add"
+    statusType,
+    icon,
+    add,
+    StatusChange.Type.Add,
+    needLevel,
+    extraSkill,
+    "+$add"
 )

@@ -14,7 +14,9 @@ object Knight: JobData {
     override val display = "ナイト"
     override val icon = Material.IRON_CHESTPLATE
     override val description = "攻撃と防御のバランスが取れたジョブ"
-    override val availableWeaponType = setOf(WeaponType.Sword)
+    override val availableWeaponType = setOf(
+        WeaponType.Sword
+    )
     override val requirements = setOf(
         JobRequirement.Point(5)
     )
@@ -23,19 +25,48 @@ object Knight: JobData {
     )
     override val passiveSkill = listOf(
         PassiveStatusUpAdd(
-            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 1
-        ), PassiveStatusUpAdd(
-            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 5
-        ), PassiveStatusUpAdd(
-            StatusType.MaxHealth, Material.GLISTERING_MELON_SLICE, 4F, 10
-        ), PassiveStatusUpAdd(
-            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 15, true
-        ), PassiveStatusUpAdd(
-            StatusType.MaxHealth, Material.GLISTERING_MELON_SLICE, 4F, 20
-        ), PassiveStatusUpAdd(
-            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 3F, 25
-        ), PassiveStatusUpMulti(
-            StatusType.BaseDefense, Material.LEATHER_CHESTPLATE, 0.05F, 30, true
+            StatusType.BaseDefense,
+            Material.LEATHER_CHESTPLATE,
+            3F,
+            1
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseDefense,
+            Material.LEATHER_CHESTPLATE,
+            3F,
+            5
+        ),
+        PassiveStatusUpAdd(
+            StatusType.MaxHealth,
+            Material.GLISTERING_MELON_SLICE,
+            4F,
+            10
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseDefense,
+            Material.LEATHER_CHESTPLATE,
+            3F,
+            15,
+            true
+        ),
+        PassiveStatusUpAdd(
+            StatusType.MaxHealth,
+            Material.GLISTERING_MELON_SLICE,
+            4F,
+            20
+        ),
+        PassiveStatusUpAdd(
+            StatusType.BaseDefense,
+            Material.LEATHER_CHESTPLATE,
+            3F,
+            25
+        ),
+        PassiveStatusUpMulti(
+            StatusType.BaseDefense,
+            Material.LEATHER_CHESTPLATE,
+            0.05F,
+            30,
+            true
         )
     )
 }

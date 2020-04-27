@@ -18,22 +18,39 @@ object DatabaseConnector: OnEnable {
 
     fun createTable(): ConnectState {
         return ConnectState.get(sql?.use {
-            executeUpdate("CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));")
-            executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);")
+            executeUpdate(
+                "CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));"
+            )
+            executeUpdate(
+                "CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);"
+            )
         })
     }
 
     object JobExp {
         private val jobExpCache = mutableMapOf<Pair<UUIDPlayer, String>, Int?>()
 
-        fun get(uuidPlayer: UUIDPlayer, jobId: String): Int? {
-            return jobExpCache.getOrPut(uuidPlayer to jobId) { getFromSQL(uuidPlayer, jobId) }
+        fun get(
+            uuidPlayer: UUIDPlayer,
+            jobId: String
+        ): Int? {
+            return jobExpCache.getOrPut(uuidPlayer to jobId) {
+                getFromSQL(
+                    uuidPlayer,
+                    jobId
+                )
+            }
         }
 
-        private fun getFromSQL(uuidPlayer: UUIDPlayer, jobId: String): Int? {
+        private fun getFromSQL(
+            uuidPlayer: UUIDPlayer,
+            jobId: String
+        ): Int? {
             var exp: Int? = null
             sql?.use {
-                val result = executeQuery("SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;")
+                val result = executeQuery(
+                    "SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;"
+                )
                 if (result.next()) {
                     exp = result.getInt(1)
                 }
@@ -41,10 +58,16 @@ object DatabaseConnector: OnEnable {
             return exp
         }
 
-        fun set(uuidPlayer: UUIDPlayer, jobId: String, exp: Int?) {
+        fun set(
+            uuidPlayer: UUIDPlayer,
+            jobId: String,
+            exp: Int?
+        ) {
             sql?.use {
                 if (exp != null) {
-                    executeQuery("INSERT INTO JobExp VALUE ('$uuidPlayer', '$jobId', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';")
+                    executeQuery(
+                        "INSERT INTO JobExp VALUE ('$uuidPlayer', '$jobId', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
+                    )
                 } else {
                     executeQuery("DELETE FROM JobExp WHERE UUID = '$uuidPlayer' LIMIT 1;")
                 }
@@ -79,9 +102,14 @@ object DatabaseConnector: OnEnable {
             return id
         }
 
-        fun set(uuidPlayer: UUIDPlayer, id: String?) {
+        fun set(
+            uuidPlayer: UUIDPlayer,
+            id: String?
+        ) {
             sql?.use {
-                executeQuery("INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE JobId = '$id';")
+                executeQuery(
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE JobId = '$id';"
+                )
             }
             activeJobCache[uuidPlayer] = id
         }
@@ -113,9 +141,14 @@ object DatabaseConnector: OnEnable {
             return point
         }
 
-        fun set(uuidPlayer: UUIDPlayer, point: Int) {
+        fun set(
+            uuidPlayer: UUIDPlayer,
+            point: Int
+        ) {
             sql?.use {
-                executeQuery("INSERT INTO JobData VALUE ('$uuidPlayer', null, $point) ON DUPLICATE KEY UPDATE JobPoint = $point;")
+                executeQuery(
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, $point) ON DUPLICATE KEY UPDATE JobPoint = $point;"
+                )
             }
             jobPointCache[uuidPlayer] = point
         }
