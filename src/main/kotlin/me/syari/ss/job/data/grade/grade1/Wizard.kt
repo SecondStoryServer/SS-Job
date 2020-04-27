@@ -3,7 +3,7 @@ package me.syari.ss.job.data.grade.grade1
 import me.syari.ss.job.data.*
 import org.bukkit.Material
 
-object Wizard : JobData {
+object Wizard: JobData {
     override val id = "wizard"
     override val display = "ウィザード"
     override val icon = Material.WOODEN_HOE

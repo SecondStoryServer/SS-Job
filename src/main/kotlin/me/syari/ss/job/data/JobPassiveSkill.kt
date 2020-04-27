@@ -6,7 +6,6 @@ import org.bukkit.Material
 interface JobPassiveSkill {
     val icon: Material
     val display: String
-    val description: String
     val needLevel: Int
     val extraSkill: Boolean
     fun apply(playerStatus: PlayerStatus)

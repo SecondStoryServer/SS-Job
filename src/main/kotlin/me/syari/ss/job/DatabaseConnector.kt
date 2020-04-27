@@ -5,7 +5,7 @@ import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.sql.ConnectState
 import me.syari.ss.core.sql.MySQL
 
-object DatabaseConnector : OnEnable {
+object DatabaseConnector: OnEnable {
     override fun onEnable() {
         createTable()
     }
@@ -33,8 +33,7 @@ object DatabaseConnector : OnEnable {
         private fun getFromSQL(uuidPlayer: UUIDPlayer, jobId: String): Int? {
             var exp: Int? = null
             sql?.use {
-                val result =
-                        executeQuery("SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;")
+                val result = executeQuery("SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;")
                 if (result.next()) {
                     exp = result.getInt(1)
                 }
