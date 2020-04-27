@@ -5,6 +5,7 @@ import me.syari.ss.job.data.JobData
 import me.syari.ss.job.data.JobRequirement
 import me.syari.ss.job.data.WeaponType
 import me.syari.ss.job.data.skill.active.base.ActiveBaseAttackUp
+import me.syari.ss.job.data.skill.active.grade1.ActiveBerserk
 import me.syari.ss.job.data.skill.passive.PassiveStatusUpAdd
 import me.syari.ss.job.data.skill.passive.PassiveStatusUpMulti
 import org.bukkit.Material
@@ -21,9 +22,7 @@ object Warrior: JobData {
         JobRequirement.Point(5)
     )
     override val activeSkill = listOf(
-        ActiveBaseAttackUp(
-            ActiveBaseAttackUp.Rank.Small, 1, true
-        )
+        ActiveBaseAttackUp(ActiveBaseAttackUp.Rank.Small), ActiveBerserk
     )
     override val passiveSkill = listOf(
         PassiveStatusUpAdd(

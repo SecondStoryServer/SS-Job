@@ -5,14 +5,14 @@ import me.syari.ss.battle.status.player.StatusType
 import org.bukkit.Material
 
 class ActiveBaseAttackUp(
-    rank: Rank, needLevel: Int, extraSkill: Boolean
+    rank: Rank
 ): ActiveStatusUp(
     StatusType.BaseAttack,
     Material.BLAZE_POWDER,
     rank.percent,
     StatusChange.Type.Multi,
-    needLevel,
-    extraSkill,
+    1,
+    true,
     rank.effectTime,
     rank.coolTime,
     rank.display,
@@ -22,7 +22,7 @@ class ActiveBaseAttackUp(
         val display: String, val percent: Float, val effectTime: Int, val coolTime: Int
     ) {
         Small(
-            "小", 1.5F, 40, 3 * 60 * 20
+            "小", 1.5F, 30 * 20, 2 * 60 * 20
         )
     }
 }
