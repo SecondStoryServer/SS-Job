@@ -1,4 +1,4 @@
-package me.syari.ss.job.data.skill.active.base
+package me.syari.ss.job.skill.active.base
 
 import me.syari.ss.battle.status.player.StatusChange
 import me.syari.ss.battle.status.player.StatusType

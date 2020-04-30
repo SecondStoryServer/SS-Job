@@ -1,9 +1,8 @@
-package me.syari.ss.job.data.skill.passive
+package me.syari.ss.job.skill.passive
 
 import me.syari.ss.battle.status.player.PlayerStatus
 import me.syari.ss.battle.status.player.StatusChange
 import me.syari.ss.battle.status.player.StatusType
-import me.syari.ss.job.data.JobPassiveSkill
 import org.bukkit.Material
 
 open class PassiveStatusUp(

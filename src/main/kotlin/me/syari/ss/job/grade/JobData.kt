@@ -1,6 +1,9 @@
-package me.syari.ss.job.data
+package me.syari.ss.job.grade
 
-import me.syari.ss.job.data.JobGrade.Companion.gradeList
+import me.syari.ss.job.WeaponType
+import me.syari.ss.job.grade.JobGrade.Companion.gradeList
+import me.syari.ss.job.skill.active.JobActiveSkill
+import me.syari.ss.job.skill.passive.JobPassiveSkill
 import org.bukkit.Material
 
 interface JobData {

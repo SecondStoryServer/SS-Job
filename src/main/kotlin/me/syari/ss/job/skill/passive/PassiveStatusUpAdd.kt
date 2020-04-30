@@ -1,15 +1,15 @@
-package me.syari.ss.job.data.skill.passive
+package me.syari.ss.job.skill.passive
 
 import me.syari.ss.battle.status.player.StatusChange
 import me.syari.ss.battle.status.player.StatusType
 import org.bukkit.Material
 
-open class PassiveStatusUpMulti(
+open class PassiveStatusUpAdd(
     statusType: StatusType,
     override val icon: Material,
-    percent: Float,
+    add: Float,
     override val needLevel: Int,
-    override val extraSkill: Boolean
+    override val extraSkill: Boolean = false
 ): PassiveStatusUp(
-    statusType, icon, percent, StatusChange.Type.Multi, needLevel, extraSkill, "+${percent * 100}%"
+    statusType, icon, add, StatusChange.Type.Add, needLevel, extraSkill, "+$add"
 )

@@ -1,6 +1,6 @@
-package me.syari.ss.job.data
+package me.syari.ss.job.grade
 
-import me.syari.ss.job.data.grade.grade1.Grade1
+import me.syari.ss.job.grade.grade1.Grade1
 
 interface JobGrade {
     val groupName: String

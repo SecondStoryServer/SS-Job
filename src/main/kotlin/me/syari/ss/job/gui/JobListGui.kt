@@ -5,9 +5,9 @@ import me.syari.ss.core.inventory.CreateInventory.inventory
 import me.syari.ss.core.inventory.CustomInventory
 import me.syari.ss.core.item.CustomItemStack
 import me.syari.ss.core.message.Message.title
-import me.syari.ss.job.data.JobData
-import me.syari.ss.job.data.JobGrade
-import me.syari.ss.job.data.JobGrade.Companion.getByIndex
+import me.syari.ss.job.grade.JobData
+import me.syari.ss.job.grade.JobGrade
+import me.syari.ss.job.grade.JobGrade.Companion.getByIndex
 import me.syari.ss.job.player.PlayerData
 import me.syari.ss.job.player.PlayerData.Companion.jobData
 import me.syari.ss.job.player.PlayerJob
@@ -19,8 +19,7 @@ import org.bukkit.inventory.ItemFlag
 
 object JobListGui {
     fun openList(
-        player: Player,
-        page: Int
+        player: Player, page: Int
     ) {
         getByIndex(page)?.let {
             openList(
@@ -30,9 +29,7 @@ object JobListGui {
     }
 
     private fun openList(
-        player: Player,
-        page: Int,
-        grade: JobGrade
+        player: Player, page: Int, grade: JobGrade
     ) {
         inventory(
             "&9&lジョブ一覧 &7- &9&l${grade.groupName}", 2, "job", "list", grade.groupName
@@ -72,21 +69,16 @@ object JobListGui {
     }
 
     private fun CustomInventory.setJobItem(
-        slot: Int,
-        player: Player,
-        jobData: JobData,
-        page: Int,
-        grade: JobGrade
+        slot: Int, player: Player, jobData: JobData, page: Int, grade: JobGrade
     ) {
         val playerData = player.jobData
         val playerJob = playerData.getJob(jobData)
         val icon = CustomItemStack.create(
             jobData.icon, "&6${jobData.display}", buildString {
                 appendln("&7&m----&d 説明 &7&m----")
-                jobData.description.lines()
-                    .forEach {
-                        appendln("&b$it")
-                    }
+                jobData.description.lines().forEach {
+                    appendln("&b$it")
+                }
                 appendln()
                 appendln("&7&m----&d 武器 &7&m----")
                 appendln("&a${jobData.availableWeaponType.joinToString(separator = "・") { it.display }}")
@@ -111,16 +103,15 @@ object JobListGui {
                     append("&6このジョブに変更する")
                 }
             }.lines()
-        )
-            .apply {
-                if (playerJob.isActive) {
-                    addEnchant(
-                        Enchantment.DURABILITY, 0
-                    )
-                    addItemFlag(ItemFlag.HIDE_ENCHANTS)
-                }
-                addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+        ).apply {
+            if (playerJob.isActive) {
+                addEnchant(
+                    Enchantment.DURABILITY, 0
+                )
+                addItemFlag(ItemFlag.HIDE_ENCHANTS)
             }
+            addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+        }
         item(
             slot, icon
         ).event {
@@ -170,10 +161,7 @@ object JobListGui {
     }
 
     private fun changeJob(
-        player: Player,
-        jobData: JobData,
-        playerData: PlayerData,
-        playerJob: PlayerJob
+        player: Player, jobData: JobData, playerData: PlayerData, playerJob: PlayerJob
     ) {
         close(player)
         player.title(

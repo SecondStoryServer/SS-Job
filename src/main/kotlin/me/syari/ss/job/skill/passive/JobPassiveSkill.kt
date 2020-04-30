@@ -1,4 +1,4 @@
-package me.syari.ss.job.data
+package me.syari.ss.job.skill.passive
 
 import me.syari.ss.battle.status.player.PlayerStatus
 import org.bukkit.Material

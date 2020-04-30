@@ -1,7 +1,7 @@
 package me.syari.ss.job.player
 
 import me.syari.ss.job.DatabaseConnector
-import me.syari.ss.job.data.JobData
+import me.syari.ss.job.grade.JobData
 
 data class PlayerJob(
     val playerData: PlayerData, val data: JobData

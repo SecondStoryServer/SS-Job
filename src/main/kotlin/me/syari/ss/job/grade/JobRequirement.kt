@@ -1,4 +1,4 @@
-package me.syari.ss.job.data
+package me.syari.ss.job.grade
 
 import me.syari.ss.job.player.PlayerData
 

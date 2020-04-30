@@ -1,6 +1,6 @@
-package me.syari.ss.job.data.grade.grade1
+package me.syari.ss.job.grade.grade1
 
-import me.syari.ss.job.data.JobGrade
+import me.syari.ss.job.grade.JobGrade
 
 object Grade1: JobGrade {
     override val groupName = "グレード１"

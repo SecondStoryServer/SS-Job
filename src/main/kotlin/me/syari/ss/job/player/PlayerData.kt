@@ -2,7 +2,7 @@ package me.syari.ss.job.player
 
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.job.DatabaseConnector
-import me.syari.ss.job.data.JobData
+import me.syari.ss.job.grade.JobData
 import org.bukkit.OfflinePlayer
 
 data class PlayerData(val uuidPlayer: UUIDPlayer) {

@@ -1,12 +1,12 @@
-package me.syari.ss.job.data.grade.grade1
+package me.syari.ss.job.grade.grade1
 
 import me.syari.ss.battle.status.player.StatusType
-import me.syari.ss.job.data.JobActiveSkill
-import me.syari.ss.job.data.JobData
-import me.syari.ss.job.data.JobRequirement
-import me.syari.ss.job.data.WeaponType
-import me.syari.ss.job.data.skill.passive.PassiveStatusUpAdd
-import me.syari.ss.job.data.skill.passive.PassiveStatusUpMulti
+import me.syari.ss.job.WeaponType
+import me.syari.ss.job.grade.JobData
+import me.syari.ss.job.grade.JobRequirement
+import me.syari.ss.job.skill.active.JobActiveSkill
+import me.syari.ss.job.skill.passive.PassiveStatusUpAdd
+import me.syari.ss.job.skill.passive.PassiveStatusUpMulti
 import org.bukkit.Material
 
 object Knight: JobData {

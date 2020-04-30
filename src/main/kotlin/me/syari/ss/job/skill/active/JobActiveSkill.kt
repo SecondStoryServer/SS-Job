@@ -1,4 +1,4 @@
-package me.syari.ss.job.data
+package me.syari.ss.job.skill.active
 
 import org.bukkit.Material
 import org.bukkit.entity.Player
