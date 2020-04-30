@@ -2,7 +2,7 @@ package me.syari.ss.job.grade.grade2
 
 import me.syari.ss.job.WeaponType
 import me.syari.ss.job.grade.JobData
-import me.syari.ss.job.grade.JobRequirement
+import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.grade.grade1.Knight
 import me.syari.ss.job.grade.grade1.Warrior
 import me.syari.ss.job.skill.active.ActiveSkill
@@ -18,7 +18,7 @@ object SwordMan: JobData {
         WeaponType.Sword
     )
     override val requirements = setOf(
-        JobRequirement.Point(5), JobRequirement.Job(Warrior), JobRequirement.Job(Knight)
+        Requirement.Point(5), Requirement.Job(Warrior), Requirement.Job(Knight)
     )
     override val activeSkill = listOf<ActiveSkill>(
 

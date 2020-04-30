@@ -6,11 +6,11 @@ import me.syari.ss.job.grade.JobData
 import org.bukkit.OfflinePlayer
 
 data class PlayerData(val uuidPlayer: UUIDPlayer) {
-    var activeJob: PlayerJob?
+    var activeJob: PlayerJobData?
         get() {
             return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let { id ->
                 JobData.getById(id)?.let {
-                    PlayerJob(
+                    PlayerJobData(
                         this, it
                     )
                 }
@@ -22,8 +22,8 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
             )
         }
 
-    fun getJob(data: JobData): PlayerJob {
-        return PlayerJob(
+    fun getJob(data: JobData): PlayerJobData {
+        return PlayerJobData(
             this, data
         )
     }

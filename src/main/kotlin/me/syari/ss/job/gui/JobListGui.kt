@@ -10,8 +10,8 @@ import me.syari.ss.job.grade.JobGrade
 import me.syari.ss.job.grade.JobGrade.Companion.getByIndex
 import me.syari.ss.job.player.PlayerData
 import me.syari.ss.job.player.PlayerData.Companion.jobData
-import me.syari.ss.job.player.PlayerJob
-import me.syari.ss.job.player.PlayerJob.Companion.maxLevel
+import me.syari.ss.job.player.PlayerJobData
+import me.syari.ss.job.player.PlayerJobData.Companion.maxLevel
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -161,12 +161,12 @@ object JobListGui {
     }
 
     private fun changeJob(
-        player: Player, jobData: JobData, playerData: PlayerData, playerJob: PlayerJob
+        player: Player, jobData: JobData, playerData: PlayerData, playerJobData: PlayerJobData
     ) {
         close(player)
         player.title(
             "&6&l&n${jobData.display}", "&f&lジョブを変更しました", 5, 30, 10
         )
-        playerData.activeJob = playerJob
+        playerData.activeJob = playerJobData
     }
 }

@@ -12,7 +12,7 @@ interface JobData {
     val icon: Material
     val description: String
     val availableWeaponType: Set<WeaponType>
-    val requirements: Set<JobRequirement>?
+    val requirements: Set<Requirement>?
     val activeSkill: List<ActiveSkill>
     val passiveSkill: List<PassiveSkill>
 

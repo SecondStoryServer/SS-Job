@@ -3,7 +3,7 @@ package me.syari.ss.job.player
 import me.syari.ss.job.DatabaseConnector
 import me.syari.ss.job.grade.JobData
 
-data class PlayerJob(
+data class PlayerJobData(
     val playerData: PlayerData, val data: JobData
 ) {
     var exp: Int?

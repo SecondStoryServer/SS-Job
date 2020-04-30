@@ -3,7 +3,7 @@ package me.syari.ss.job.grade.grade1
 import me.syari.ss.battle.status.player.StatusType
 import me.syari.ss.job.WeaponType
 import me.syari.ss.job.grade.JobData
-import me.syari.ss.job.grade.JobRequirement
+import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.skill.active.base.ActiveBaseAttackUp
 import me.syari.ss.job.skill.active.grade1.ActiveBerserk
 import me.syari.ss.job.skill.passive.PassiveStatusUpAdd
@@ -19,7 +19,7 @@ object Warrior: JobData {
         WeaponType.Sword, WeaponType.Axe
     )
     override val requirements = setOf(
-        JobRequirement.Point(5)
+        Requirement.Point(5)
     )
     override val activeSkill = listOf(
         ActiveBaseAttackUp(ActiveBaseAttackUp.Rank.Small), ActiveBerserk

@@ -2,12 +2,12 @@ package me.syari.ss.job.grade
 
 import me.syari.ss.job.player.PlayerData
 
-interface JobRequirement {
+interface Requirement {
     val description: String
     fun has(playerData: PlayerData): Boolean
     fun use(playerData: PlayerData)
 
-    class Job(private val jobData: JobData): JobRequirement {
+    class Job(private val jobData: JobData): Requirement {
         override val description = "${jobData.display} のレベルを最大にする"
 
         override fun has(playerData: PlayerData): Boolean {
@@ -17,7 +17,7 @@ interface JobRequirement {
         override fun use(playerData: PlayerData) {}
     }
 
-    class Point(private val point: Int): JobRequirement {
+    class Point(private val point: Int): Requirement {
         override val description = "ジョブポイントを $point 使用する"
 
         override fun has(playerData: PlayerData): Boolean {
