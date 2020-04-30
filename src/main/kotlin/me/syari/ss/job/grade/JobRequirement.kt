@@ -7,13 +7,11 @@ interface JobRequirement {
     fun has(playerData: PlayerData): Boolean
     fun use(playerData: PlayerData)
 
-    class Job(private val id: String): JobRequirement {
-        val data by lazy { JobData.getById(id) }
-
-        override val description = "${data?.display} のレベルを最大にする"
+    class Job(private val jobData: JobData): JobRequirement {
+        override val description = "${jobData.display} のレベルを最大にする"
 
         override fun has(playerData: PlayerData): Boolean {
-            return data?.let { playerData.getJob(it).isMaxLevel } ?: false
+            return playerData.getJob(jobData).isMaxLevel
         }
 
         override fun use(playerData: PlayerData) {}
