@@ -13,7 +13,7 @@ open class PassiveStatusUp(
     override val needLevel: Int,
     override val extraSkill: Boolean,
     upText: String
-): JobPassiveSkill {
+): PassiveSkill {
     override val display = "${statusType.display} 上昇 $upText"
 
     override fun apply(playerStatus: PlayerStatus) {

@@ -3,7 +3,7 @@ package me.syari.ss.job.skill.active
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-interface JobActiveSkill {
+interface ActiveSkill {
     val icon: Material
     val display: String
     val description: String

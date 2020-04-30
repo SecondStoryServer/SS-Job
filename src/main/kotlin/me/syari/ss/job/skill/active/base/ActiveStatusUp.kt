@@ -3,7 +3,7 @@ package me.syari.ss.job.skill.active.base
 import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
 import me.syari.ss.battle.status.player.StatusChange
 import me.syari.ss.battle.status.player.StatusType
-import me.syari.ss.job.skill.active.JobActiveSkill
+import me.syari.ss.job.skill.active.ActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -18,7 +18,7 @@ open class ActiveStatusUp(
     override val coolTime: Int,
     amountText: String,
     upText: String
-): JobActiveSkill {
+): ActiveSkill {
     override val display = "${statusType.display} 上昇 〈${amountText}〉"
     override val description = "自身の ${statusType.display} を $upText 上昇させる"
 

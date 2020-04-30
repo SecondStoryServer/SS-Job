@@ -4,11 +4,11 @@ import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
 import me.syari.ss.battle.status.player.StatusChange.Cause
 import me.syari.ss.battle.status.player.StatusChange.Type
 import me.syari.ss.battle.status.player.StatusType
-import me.syari.ss.job.skill.active.JobActiveSkill
+import me.syari.ss.job.skill.active.ActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-object ActiveBerserk: JobActiveSkill {
+object ActiveBerserk: ActiveSkill {
     override val icon = Material.IRON_AXE
     override val display = "バーサーク"
     override val description = "動きが遅くなる代わりに攻撃力が +300% 上昇させる"
