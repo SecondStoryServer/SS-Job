@@ -7,9 +7,9 @@ import me.syari.ss.job.skill.active.JobActiveSkill
 import me.syari.ss.job.skill.passive.JobPassiveSkill
 import org.bukkit.Material
 
-object Wizard: JobData {
-    override val id = "wizard"
-    override val display = "ウィザード"
+object Mage: JobData {
+    override val id = "mage"
+    override val display = "メイジ"
     override val icon = Material.WOODEN_HOE
     override val description = "遠距離から魔法を放つジョブ"
     override val availableWeaponType = setOf(

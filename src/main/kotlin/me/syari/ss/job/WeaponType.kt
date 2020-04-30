@@ -20,6 +20,9 @@ enum class WeaponType(
     ),
     Mace(
         "mace", "棍"
+    ),
+    Knuckle(
+        "knuckle", "拳"
     );
 
     companion object {

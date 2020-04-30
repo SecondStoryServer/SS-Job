@@ -7,16 +7,13 @@ import me.syari.ss.job.skill.active.JobActiveSkill
 import me.syari.ss.job.skill.passive.JobPassiveSkill
 import org.bukkit.Material
 
-object Hunter: JobData {
-    override val id = "hunter"
-    override val display = "ハンター"
-    override val icon = Material.BOW
-    override val description = """
-        近距離・遠距離ともに扱え、
-        トリッキーな立ち回りが出来るジョブ
-    """.trimIndent()
+object Fighter: JobData {
+    override val id = "fighter"
+    override val display = "ファイター"
+    override val icon = Material.BLACK_DYE
+    override val description = ""
     override val availableWeaponType = setOf(
-        WeaponType.Bow, WeaponType.Knife
+        WeaponType.Knuckle
     )
     override val requirements = setOf(
         JobRequirement.Point(5)
