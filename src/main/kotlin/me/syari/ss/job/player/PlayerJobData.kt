@@ -9,12 +9,12 @@ data class PlayerJobData(
     var exp: Int?
         get() {
             return DatabaseConnector.JobExp.get(
-                playerData.uuidPlayer, data.id
+                playerData.uuidPlayer, data
             )
         }
         set(value) {
             DatabaseConnector.JobExp.set(
-                playerData.uuidPlayer, data.id, value
+                playerData.uuidPlayer, data, value
             )
             playerData.updateExpBar()
         }

@@ -1,12 +1,21 @@
 package me.syari.ss.job.skill.passive
 
 import me.syari.ss.battle.status.player.PlayerStatus
-import org.bukkit.Material
+import me.syari.ss.battle.status.player.StatusChange
+import me.syari.ss.battle.status.player.StatusType
 
-interface PassiveSkill {
-    val icon: Material
-    val display: String
-    val needLevel: Int
-    val extraSkill: Boolean
-    fun apply(playerStatus: PlayerStatus)
+data class PassiveSkill(
+    val needLevel: Int,
+    val statusType: StatusType,
+    val value: Float,
+    val changeType: StatusChange.Type,
+    val extraSkill: Boolean = false
+) {
+    fun apply(level: Int, isActive: Boolean, playerStatus: PlayerStatus) {
+        if ((isActive || extraSkill) && needLevel <= level) {
+            playerStatus.add(
+                StatusChange.Cause.PassiveSkill, statusType, value, changeType
+            )
+        }
+    }
 }

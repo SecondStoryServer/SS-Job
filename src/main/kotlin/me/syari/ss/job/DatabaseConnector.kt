@@ -4,6 +4,7 @@ import me.syari.ss.core.auto.OnEnable
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.sql.ConnectState
 import me.syari.ss.core.sql.MySQL
+import me.syari.ss.job.grade.JobData
 
 object DatabaseConnector: OnEnable {
     override fun onEnable() {
@@ -28,46 +29,54 @@ object DatabaseConnector: OnEnable {
     }
 
     object JobExp {
-        private val jobExpCache = mutableMapOf<Pair<UUIDPlayer, String>, Int?>()
+        private val jobExpCache = mutableMapOf<Pair<UUIDPlayer, JobData>, Int?>()
 
         fun get(
-            uuidPlayer: UUIDPlayer, jobId: String
+            uuidPlayer: UUIDPlayer, jobData: JobData
         ): Int? {
-            return jobExpCache.getOrPut(uuidPlayer to jobId) {
-                getFromSQL(
-                    uuidPlayer, jobId
-                )
-            }
+            return jobExpCache[uuidPlayer to jobData]
         }
 
-        private fun getFromSQL(
-            uuidPlayer: UUIDPlayer, jobId: String
-        ): Int? {
-            var exp: Int? = null
+        fun getAll(
+            uuidPlayer: UUIDPlayer
+        ): Map<JobData, Int?> {
+            return jobExpCache.filterKeys {
+                it.first == uuidPlayer
+            }.map {
+                it.key.second to it.value
+            }.toMap()
+        }
+
+        fun reloadAll(
+            uuidPlayer: UUIDPlayer
+        ) {
             sql?.use {
                 val result = executeQuery(
-                    "SELECT Exp FROM JobExp WHERE UUID = '$uuidPlayer' AND JobId = '$jobId' LIMIT 1;"
+                    "SELECT JobId, Exp FROM JobExp WHERE UUID = '$uuidPlayer';"
                 )
-                if (result.next()) {
-                    exp = result.getInt(1)
+                while (result.next()) {
+                    val jobId = result.getString(1)
+                    JobData.getById(jobId)?.let { jobData ->
+                        val exp = result.getInt(2)
+                        jobExpCache[uuidPlayer to jobData] = exp
+                    }
                 }
             }
-            return exp
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, jobId: String, exp: Int?
+            uuidPlayer: UUIDPlayer, jobData: JobData, exp: Int?
         ) {
             sql?.use {
                 if (exp != null) {
                     executeQuery(
-                        "INSERT INTO JobExp VALUE ('$uuidPlayer', '$jobId', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
+                        "INSERT INTO JobExp VALUE ('$uuidPlayer', '${jobData.id}', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
                     )
                 } else {
                     executeQuery("DELETE FROM JobExp WHERE UUID = '$uuidPlayer' LIMIT 1;")
                 }
             }
-            jobExpCache[uuidPlayer to jobId] = exp
+            jobExpCache[uuidPlayer to jobData] = exp
         }
 
         fun deleteCache(uuidPlayer: UUIDPlayer) {
@@ -80,13 +89,13 @@ object DatabaseConnector: OnEnable {
     }
 
     object ActiveJob {
-        private val activeJobCache = mutableMapOf<UUIDPlayer, String?>()
+        private val activeJobCache = mutableMapOf<UUIDPlayer, JobData?>()
 
-        fun get(uuidPlayer: UUIDPlayer): String? {
+        fun get(uuidPlayer: UUIDPlayer): JobData? {
             return activeJobCache.getOrPut(uuidPlayer) { getFromSQL(uuidPlayer) }
         }
 
-        private fun getFromSQL(uuidPlayer: UUIDPlayer): String? {
+        private fun getFromSQL(uuidPlayer: UUIDPlayer): JobData? {
             var id: String? = null
             sql?.use {
                 val result = executeQuery("SELECT JobId FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
@@ -94,18 +103,19 @@ object DatabaseConnector: OnEnable {
                     id = result.getString(1)
                 }
             }
-            return id
+            return id?.let { JobData.getById(it) }
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, id: String?
+            uuidPlayer: UUIDPlayer, jobData: JobData?
         ) {
+            val id = jobData?.id
             sql?.use {
                 executeQuery(
                     "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE JobId = '$id';"
                 )
             }
-            activeJobCache[uuidPlayer] = id
+            activeJobCache[uuidPlayer] = jobData
         }
 
         fun deleteCache(uuidPlayer: UUIDPlayer) {

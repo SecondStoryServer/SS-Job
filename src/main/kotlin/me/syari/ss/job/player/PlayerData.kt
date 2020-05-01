@@ -1,5 +1,7 @@
 package me.syari.ss.job.player
 
+import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
+import me.syari.ss.battle.status.player.StatusChange.Cause.PassiveSkill
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.job.DatabaseConnector
 import me.syari.ss.job.grade.JobData
@@ -8,24 +10,25 @@ import org.bukkit.OfflinePlayer
 data class PlayerData(val uuidPlayer: UUIDPlayer) {
     var activeJob: PlayerJobData?
         get() {
-            return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let { id ->
-                JobData.getById(id)?.let {
-                    PlayerJobData(
-                        this, it
-                    )
-                }
+            return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let {
+                PlayerJobData(
+                    this, it
+                )
             }
         }
         set(value) {
             DatabaseConnector.ActiveJob.set(
-                uuidPlayer, value?.data?.id
+                uuidPlayer, value?.data
             )
         }
 
+    val allJob: List<PlayerJobData>
+        get() {
+            return DatabaseConnector.JobExp.getAll(uuidPlayer).keys.map { it.get(this) }
+        }
+
     fun getJob(data: JobData): PlayerJobData {
-        return PlayerJobData(
-            this, data
-        )
+        return data.get(this)
     }
 
     var jobPoint: Int
@@ -54,6 +57,26 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
                 )
             }
         }
+    }
+
+    fun updatePassiveSkill() {
+        uuidPlayer.player?.let { player ->
+            val playerStatus = player.status
+            playerStatus.clear(PassiveSkill)
+            allJob.forEach { playerJobData ->
+                val level = playerJobData.level
+                if (level != null) {
+                    val isActive = playerJobData.isActive
+                    playerJobData.data.passiveSkill.forEach { passiveSkill ->
+                        passiveSkill.apply(level, isActive, playerStatus)
+                    }
+                }
+            }
+        }
+    }
+
+    fun reloadExp() {
+        DatabaseConnector.JobExp.reloadAll(uuidPlayer)
     }
 
     companion object {
