@@ -2,6 +2,7 @@ package me.syari.ss.job.skill.passive
 
 import me.syari.ss.battle.status.player.PlayerStatus
 import me.syari.ss.battle.status.player.StatusChange
+import me.syari.ss.battle.status.player.StatusChange.Cause
 import me.syari.ss.battle.status.player.StatusType
 
 data class PassiveSkill(
@@ -12,9 +13,14 @@ data class PassiveSkill(
     val extraSkill: Boolean = false
 ) {
     fun apply(level: Int, isActive: Boolean, playerStatus: PlayerStatus) {
-        if ((isActive || extraSkill) && needLevel <= level) {
+        if (needLevel <= level) {
+            val cause = when {
+                isActive -> Cause.PassiveSkillMain
+                extraSkill -> Cause.PassiveSkillExtra
+                else -> return
+            }
             playerStatus.add(
-                StatusChange.Cause.PassiveSkill, statusType, value, changeType
+                cause, statusType, value, changeType
             )
         }
     }
