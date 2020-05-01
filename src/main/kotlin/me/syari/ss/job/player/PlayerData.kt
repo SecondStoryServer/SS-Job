@@ -8,6 +8,16 @@ import me.syari.ss.job.grade.JobData
 import org.bukkit.OfflinePlayer
 
 data class PlayerData(val uuidPlayer: UUIDPlayer) {
+    private val allJob by lazy {
+        DatabaseConnector.JobExp.getJobList(uuidPlayer).map {
+            it to PlayerJobData(this, it)
+        }.toMap().toMutableMap()
+    }
+
+    fun getJob(data: JobData): PlayerJobData {
+        return allJob.getOrPut(data) { PlayerJobData(this, data) }
+    }
+
     var activeJob: PlayerJobData?
         get() {
             return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let {
@@ -19,16 +29,6 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
                 uuidPlayer, value?.data
             )
         }
-
-    private val allJob by lazy {
-        DatabaseConnector.JobExp.getAll(uuidPlayer).keys.map {
-            it to PlayerJobData(this, it)
-        }.toMap().toMutableMap()
-    }
-
-    fun getJob(data: JobData): PlayerJobData {
-        return allJob.getOrPut(data) { PlayerJobData(this, data) }
-    }
 
     var jobPoint: Int
         set(value) {
@@ -85,15 +85,21 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
         }
     }
 
-    fun reloadExp() {
-        DatabaseConnector.JobExp.reloadAll(uuidPlayer)
-    }
-
     companion object {
+        private val jobDataCache = mutableMapOf<UUIDPlayer, PlayerData>()
+
         val OfflinePlayer.jobData
             get() = UUIDPlayer(this).jobData
 
-        val UUIDPlayer.jobData
-            get() = PlayerData(this)
+        private val UUIDPlayer.jobData
+            get() = jobDataCache.getOrPut(this) { PlayerData(this) }
+
+        fun deleteCache(uuidPlayer: UUIDPlayer) {
+            jobDataCache.remove(uuidPlayer)
+        }
+
+        fun clearCache() {
+            jobDataCache.clear()
+        }
     }
 }

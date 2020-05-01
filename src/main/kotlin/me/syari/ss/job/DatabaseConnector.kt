@@ -37,28 +37,21 @@ object DatabaseConnector: OnEnable {
             return jobExpCache[uuidPlayer to jobData]
         }
 
-        fun getAll(
+        fun getJobList(
             uuidPlayer: UUIDPlayer
-        ): Map<JobData, Int?> {
-            return jobExpCache.filterKeys {
-                it.first == uuidPlayer
-            }.map {
-                it.key.second to it.value
-            }.toMap()
-        }
-
-        fun reloadAll(
-            uuidPlayer: UUIDPlayer
-        ) {
-            sql?.use {
-                val result = executeQuery(
-                    "SELECT JobId, Exp FROM JobExp WHERE UUID = '$uuidPlayer';"
-                )
-                while (result.next()) {
-                    val jobId = result.getString(1)
-                    JobData.getById(jobId)?.let { jobData ->
-                        val exp = result.getInt(2)
-                        jobExpCache[uuidPlayer to jobData] = exp
+        ): List<JobData> {
+            return mutableListOf<JobData>().apply {
+                sql?.use {
+                    val result = executeQuery(
+                        "SELECT JobId, Exp FROM JobExp WHERE UUID = '$uuidPlayer';"
+                    )
+                    while (result.next()) {
+                        val jobId = result.getString(1)
+                        JobData.getById(jobId)?.let { jobData ->
+                            val exp = result.getInt(2)
+                            jobExpCache[uuidPlayer to jobData] = exp
+                            add(jobData)
+                        }
                     }
                 }
             }

@@ -14,6 +14,7 @@ import me.syari.ss.job.DatabaseConnector.JobPoint
 import me.syari.ss.job.DatabaseConnector.createTable
 import me.syari.ss.job.Main.Companion.jobPlugin
 import me.syari.ss.job.gui.JobListGui
+import me.syari.ss.job.player.PlayerData
 import me.syari.ss.job.player.PlayerData.Companion.jobData
 import org.bukkit.entity.Player
 
@@ -77,12 +78,14 @@ object CommandCreator: OnEnable {
                                     JobExp.deleteCache(uuidPlayer)
                                     ActiveJob.deleteCache(uuidPlayer)
                                     JobPoint.deleteCache(uuidPlayer)
+                                    PlayerData.deleteCache(uuidPlayer)
                                     sendWithPrefix("&6${player.name} &fのキャッシュを削除しました")
                                 }
                                 "clear" -> {
                                     JobExp.clearCache()
                                     ActiveJob.clearCache()
                                     JobPoint.clearCache()
+                                    PlayerData.clearCache()
                                     sendWithPrefix("&f全てのキャッシュを削除しました")
                                 }
                             }
