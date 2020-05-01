@@ -11,9 +11,7 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
     var activeJob: PlayerJobData?
         get() {
             return DatabaseConnector.ActiveJob.get(uuidPlayer)?.let {
-                PlayerJobData(
-                    this, it
-                )
+                getJob(it)
             }
         }
         set(value) {
@@ -22,13 +20,14 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
             )
         }
 
-    val allJob: List<PlayerJobData>
-        get() {
-            return DatabaseConnector.JobExp.getAll(uuidPlayer).keys.map { it.get(this) }
-        }
+    private val allJob by lazy {
+        DatabaseConnector.JobExp.getAll(uuidPlayer).keys.map {
+            it to PlayerJobData(this, it)
+        }.toMap().toMutableMap()
+    }
 
     fun getJob(data: JobData): PlayerJobData {
-        return data.get(this)
+        return allJob.getOrPut(data) { PlayerJobData(this, data) }
     }
 
     var jobPoint: Int
@@ -45,15 +44,11 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
         return point <= jobPoint
     }
 
-    fun isAvailableJob(jobData: JobData): Boolean {
-        return getJob(jobData).isAvailable
-    }
-
     fun updateExpBar() {
         uuidPlayer.player?.let { player ->
             activeJob?.let { activeJob ->
                 player.sendExperienceChange(
-                    activeJob.levelProgress, activeJob.level ?: 0
+                    activeJob.levelProgress, activeJob.level
                 )
             }
         }
@@ -64,7 +59,7 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
             playerStatus.clear(Cause.PassiveSkillMain)
             activeJob?.let { mainJob ->
                 val level = mainJob.level
-                if (level != null) {
+                if (mainJob.isAvailable) {
                     mainJob.data.passiveSkill.forEach { passiveSkill ->
                         passiveSkill.apply(level, true, playerStatus)
                     }
@@ -78,9 +73,9 @@ data class PlayerData(val uuidPlayer: UUIDPlayer) {
             val playerStatus = player.status
             playerStatus.clear(Cause.PassiveSkillMain)
             playerStatus.clear(Cause.PassiveSkillExtra)
-            allJob.forEach { playerJobData ->
-                val level = playerJobData.level
-                if (level != null) {
+            allJob.values.forEach { playerJobData ->
+                if (playerJobData.isAvailable) {
+                    val level = playerJobData.level
                     val isActive = playerJobData.isActive
                     playerJobData.data.passiveSkill.forEach { passiveSkill ->
                         passiveSkill.apply(level, isActive, playerStatus)

@@ -83,7 +83,7 @@ object JobListGui {
                 appendln("&7&m----&d 武器 &7&m----")
                 appendln("&a${jobData.availableWeaponType.joinToString(separator = "・") { it.display }}")
                 appendln()
-                if (playerData.isAvailableJob(jobData)) {
+                if (playerData.getJob(jobData).isAvailable) {
                     appendln("&7&m----&d 情報 &7&m----")
                     append("&7現在のレベル: &a${playerJob.level} &7/ &a$maxLevel")
                     appendln()
@@ -134,13 +134,13 @@ object JobListGui {
                                 0, 1, 2, 3, 9, 10, 11, 12
                             ), Material.LIME_STAINED_GLASS_PANE, "&a変更する"
                         ).event {
+                            playerJob.exp = 0
                             changeJob(
                                 player, jobData, playerData, playerJob
                             )
                             jobData.requirements?.forEach {
                                 it.use(playerData)
                             }
-                            playerData.getJob(jobData).exp = 0
                         }
                         item(
                             4, 13, material = Material.GRAY_STAINED_GLASS_PANE

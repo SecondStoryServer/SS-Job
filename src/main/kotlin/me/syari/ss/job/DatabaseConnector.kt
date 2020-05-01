@@ -65,16 +65,12 @@ object DatabaseConnector: OnEnable {
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, jobData: JobData, exp: Int?
+            uuidPlayer: UUIDPlayer, jobData: JobData, exp: Int
         ) {
             sql?.use {
-                if (exp != null) {
-                    executeQuery(
-                        "INSERT INTO JobExp VALUE ('$uuidPlayer', '${jobData.id}', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
-                    )
-                } else {
-                    executeQuery("DELETE FROM JobExp WHERE UUID = '$uuidPlayer' LIMIT 1;")
-                }
+                executeQuery(
+                    "INSERT INTO JobExp VALUE ('$uuidPlayer', '${jobData.id}', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
+                )
             }
             jobExpCache[uuidPlayer to jobData] = exp
         }
