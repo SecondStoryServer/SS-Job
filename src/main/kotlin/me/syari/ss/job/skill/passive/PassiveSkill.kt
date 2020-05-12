@@ -10,10 +10,10 @@ data class PassiveSkill(
     val statusType: StatusType,
     val value: Float,
     val changeType: StatusChange.Type,
-    val extraSkill: Boolean = false
+    val extraSkill: Boolean
 ) {
     fun apply(level: Int, isActive: Boolean, playerStatus: PlayerStatus) {
-        if (needLevel <= level) {
+        if (isAvailable(level)) {
             val cause = when {
                 isActive -> Cause.PassiveSkillMain
                 extraSkill -> Cause.PassiveSkillExtra
@@ -23,5 +23,9 @@ data class PassiveSkill(
                 cause, statusType, value, changeType
             )
         }
+    }
+
+    fun isAvailable(level: Int): Boolean {
+        return needLevel <= level
     }
 }
