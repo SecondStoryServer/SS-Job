@@ -18,7 +18,7 @@ object SwordMan: JobData {
         WeaponType.Sword
     )
     override val requirements = setOf(
-        Requirement.Point(5), Requirement.Job(Warrior), Requirement.Job(Knight)
+        Requirement.Job(Warrior), Requirement.Job(Knight)
     )
     override val activeSkill = buildActiveSkill {
 

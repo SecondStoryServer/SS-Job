@@ -20,8 +20,8 @@ object Warrior: JobData {
     override val availableWeaponType = setOf(
         WeaponType.Sword, WeaponType.Axe
     )
-    override val requirements = setOf(
-        Requirement.Point(5)
+    override val requirements = setOf<Requirement>(
+
     )
     override val activeSkill = buildActiveSkill {
         add(ActiveBaseAttackUp(ActiveBaseAttackUp.Rank.Small))

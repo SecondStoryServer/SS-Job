@@ -15,8 +15,8 @@ object Mage: JobData {
     override val availableWeaponType = setOf(
         WeaponType.Wand
     )
-    override val requirements = setOf(
-        Requirement.Point(5)
+    override val requirements = setOf<Requirement>(
+
     )
     override val activeSkill = buildActiveSkill {
 

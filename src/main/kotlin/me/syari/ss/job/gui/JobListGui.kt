@@ -138,9 +138,6 @@ object JobListGui {
                             changeJob(
                                 player, jobData, playerData, playerJob
                             )
-                            jobData.requirements?.forEach {
-                                it.use(playerData)
-                            }
                         }
                         item(
                             4, 13, material = Material.GRAY_STAINED_GLASS_PANE

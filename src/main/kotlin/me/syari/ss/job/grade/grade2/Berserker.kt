@@ -18,7 +18,7 @@ object Berserker: JobData {
         WeaponType.Axe
     )
     override val requirements = setOf(
-        Requirement.Point(5), Requirement.Job(Warrior), Requirement.Job(Fighter)
+        Requirement.Job(Warrior), Requirement.Job(Fighter)
     )
     override val activeSkill = buildActiveSkill {
 

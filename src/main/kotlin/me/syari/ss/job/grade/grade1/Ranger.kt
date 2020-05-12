@@ -18,8 +18,8 @@ object Ranger: JobData {
     override val availableWeaponType = setOf(
         WeaponType.Bow, WeaponType.Knife
     )
-    override val requirements = setOf(
-        Requirement.Point(5)
+    override val requirements = setOf<Requirement>(
+
     )
     override val activeSkill = buildActiveSkill {
 

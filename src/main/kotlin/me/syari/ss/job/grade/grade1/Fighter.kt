@@ -15,8 +15,8 @@ object Fighter: JobData {
     override val availableWeaponType = setOf(
         WeaponType.Knuckle
     )
-    override val requirements = setOf(
-        Requirement.Point(5)
+    override val requirements = setOf<Requirement>(
+
     )
     override val activeSkill = buildActiveSkill {
 
