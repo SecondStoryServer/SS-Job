@@ -2,21 +2,13 @@ package me.syari.ss.job.player
 
 import me.syari.ss.job.DatabaseConnector
 import me.syari.ss.job.grade.JobData
-import kotlin.properties.Delegates
 
 data class PlayerJobData(
     val playerData: PlayerData, val data: JobData
 ) {
-    var level: Int
-        private set
-    private var expToLevel by Delegates.notNull<Int>()
-    private var expToNextLevel by Delegates.notNull<Int>()
-
-    init {
-        level = getLevelFromExp(exp)
-        expToLevel = getExpFromLevel(level - 1)
-        expToNextLevel = if (isMaxLevel) exp else getExpFromLevel(level)
-    }
+    var level = getLevelFromExp(exp)
+    private var expToLevel = getExpFromLevel(level - 1)
+    private var expToNextLevel = if (isMaxLevel) exp else getExpFromLevel(level)
 
     private val nullableExp: Int?
         get() {
@@ -42,9 +34,7 @@ data class PlayerJobData(
         }
 
     val levelProgress
-        get(): Float {
-            return (exp - expToLevel) / (expToNextLevel - expToLevel).toFloat()
-        }
+        get() = (exp - expToLevel) / (expToNextLevel - expToLevel).toFloat()
 
     inline val isMaxLevel
         get() = maxLevel == level
@@ -55,12 +45,13 @@ data class PlayerJobData(
     val canGet
         get() = data.requirements?.all { it.has(playerData) } ?: true
 
-    val isAvailable by lazy { nullableExp != null }
+    val isAvailable
+        get() = nullableExp != null
 
     companion object {
-        var maxLevel = 30
-        private var expToLevelTable: List<Int>
-        private var expToLevelTableReversed: List<Int>
+        val maxLevel: Int
+        private val expToLevelTable: List<Int>
+        private val expToLevelTableReversed: List<Int>
 
         init {
             val expToLevelTable = mutableListOf<Int>()
