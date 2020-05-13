@@ -6,6 +6,6 @@ object Grade1: JobGrade {
     override val groupName = "グレード１"
 
     override val jobList = mapOf(
-        Warrior to 0, Knight to 1, Ranger to 2, Mage to 3, Priest to 4, Fighter to 5
+        Warrior to 1, Knight to 2, Ranger to 3, Mage to 4, Priest to 5, Fighter to 6, Bard to 7
     )
 }
