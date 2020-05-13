@@ -12,8 +12,8 @@ object Bard: JobData {
     override val display = "バード"
     override val icon = Material.MUSIC_DISC_CAT
     override val description = ""
-    override val availableWeaponType = setOf<WeaponType>(
-
+    override val availableWeaponType = setOf(
+        WeaponType.Harp
     )
     override val requirements = setOf<Requirement>(
 

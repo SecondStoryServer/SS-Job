@@ -14,8 +14,8 @@ object Thief: JobData {
     override val display = "シーフ"
     override val icon = Material.LEATHER_BOOTS
     override val description = ""
-    override val availableWeaponType = setOf<WeaponType>(
-
+    override val availableWeaponType = setOf(
+        WeaponType.Knife
     )
     override val requirements = setOf(
         Requirement.Job(Ranger), Requirement.Job(Bard)

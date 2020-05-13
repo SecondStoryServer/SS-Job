@@ -14,8 +14,8 @@ object Bishop: JobData {
     override val display = "ビショップ"
     override val icon = Material.WOODEN_HOE
     override val description = ""
-    override val availableWeaponType = setOf<WeaponType>(
-
+    override val availableWeaponType = setOf(
+        WeaponType.Mace
     )
     override val requirements = setOf(
         Requirement.Job(Priest), Requirement.Job(Mage)
