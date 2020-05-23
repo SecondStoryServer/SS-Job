@@ -1,9 +1,9 @@
 package me.syari.ss.job.skill.active.grade1
 
+import me.syari.ss.battle.status.StatusType
 import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
 import me.syari.ss.battle.status.player.StatusChange.Cause
 import me.syari.ss.battle.status.player.StatusChange.Type
-import me.syari.ss.battle.status.player.StatusType
 import me.syari.ss.job.skill.active.ActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -19,7 +19,7 @@ object ActiveBerserk: ActiveSkill {
     override fun use(player: Player) {
         val playerStatus = player.status
         playerStatus.add(
-            Cause.ActiveSkill, StatusType.BaseAttack, 3.0F, Type.Multi, 20 * 20
+            Cause.ActiveSkill, StatusType.allAttack, 3.0F, Type.Multi, 20 * 20
         )
         playerStatus.add(
             Cause.ActiveSkill, StatusType.MoveSpeed, -0.08F, Type.Add, 20 * 20

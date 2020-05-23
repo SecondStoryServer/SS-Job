@@ -1,13 +1,13 @@
 package me.syari.ss.job.skill.passive
 
+import me.syari.ss.battle.status.StatusType
 import me.syari.ss.battle.status.player.PlayerStatus
 import me.syari.ss.battle.status.player.StatusChange
 import me.syari.ss.battle.status.player.StatusChange.Cause
-import me.syari.ss.battle.status.player.StatusType
 
 data class PassiveSkill(
     val needLevel: Int,
-    val statusType: StatusType,
+    val statusType: List<StatusType>,
     val value: Float,
     val changeType: StatusChange.Type,
     val extraSkill: Boolean

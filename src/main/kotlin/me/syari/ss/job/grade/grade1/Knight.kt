@@ -1,8 +1,8 @@
 package me.syari.ss.job.grade.grade1
 
+import me.syari.ss.battle.status.StatusType
 import me.syari.ss.battle.status.player.StatusChange.Type.Add
 import me.syari.ss.battle.status.player.StatusChange.Type.Multi
-import me.syari.ss.battle.status.player.StatusType
 import me.syari.ss.item.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobData
 import me.syari.ss.job.grade.Requirement
@@ -25,12 +25,12 @@ object Knight: JobData {
 
     }
     override val passiveSkill = buildPassiveSkill {
-        add(1, StatusType.BaseDefense, 3F, Add)
-        add(5, StatusType.BaseDefense, 3F, Add)
+        add(1, StatusType.allDefense, 3F, Add)
+        add(5, StatusType.allDefense, 3F, Add)
         add(10, StatusType.MaxHealth, 4F, Add)
-        add(15, StatusType.BaseDefense, 3F, Add, true)
+        add(15, StatusType.allDefense, 3F, Add, true)
         add(20, StatusType.MaxHealth, 4F, Add)
-        add(25, StatusType.BaseDefense, 3F, Add)
-        add(30, StatusType.BaseDefense, 0.05F, Multi, true)
+        add(25, StatusType.allDefense, 3F, Add)
+        add(30, StatusType.allDefense, 0.05F, Multi, true)
     }
 }
