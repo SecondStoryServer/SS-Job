@@ -3,6 +3,7 @@ package me.syari.ss.job
 import me.syari.ss.core.auto.OnEnable
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.sql.ConnectState
+import me.syari.ss.core.sql.ConnectState.Companion.checkConnect
 import me.syari.ss.core.sql.MySQL
 import me.syari.ss.job.grade.JobData
 
@@ -14,18 +15,14 @@ object DatabaseConnector: OnEnable {
     var sql: MySQL? = null
 
     fun checkConnect(): ConnectState {
-        return ConnectState.get(sql?.canConnect())
+        return sql.checkConnect()
     }
 
-    fun createTable(): ConnectState {
-        return ConnectState.get(sql?.use {
-            executeUpdate(
-                "CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));"
-            )
-            executeUpdate(
-                "CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);"
-            )
-        })
+    fun createTable() {
+        sql?.use {
+            executeUpdate("CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));")
+            executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);")
+        }
     }
 
     object JobExp {

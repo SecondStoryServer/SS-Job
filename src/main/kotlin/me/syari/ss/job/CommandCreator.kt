@@ -53,12 +53,8 @@ object CommandCreator: OnEnable {
                 "database" -> {
                     when (args.whenIndex(1)) {
                         "create" -> {
-                            val state = createTable()
-                            val builder = StringBuilder()
-                            builder.append(if (state.isSuccess) "&f" else "&c")
-                            builder.append("テーブル作成に")
-                            builder.append(state.message)
-                            sendWithPrefix(builder.toString())
+                            createTable()
+                            sendWithPrefix("テーブル作成のクエリを実行しました")
                         }
                         "check" -> {
                             val state = DatabaseConnector.checkConnect()

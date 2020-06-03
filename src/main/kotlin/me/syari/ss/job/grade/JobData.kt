@@ -1,6 +1,6 @@
 package me.syari.ss.job.grade
 
-import me.syari.ss.item.equip.weapon.WeaponType
+import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobGrade.Companion.gradeList
 import me.syari.ss.job.skill.active.ActiveSkill
 import me.syari.ss.job.skill.passive.PassiveSkill

@@ -3,7 +3,7 @@ package me.syari.ss.job.grade.grade1
 import me.syari.ss.battle.status.StatusType
 import me.syari.ss.battle.status.player.StatusChange.Type.Add
 import me.syari.ss.battle.status.player.StatusChange.Type.Multi
-import me.syari.ss.item.equip.weapon.WeaponType
+import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobData
 import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
