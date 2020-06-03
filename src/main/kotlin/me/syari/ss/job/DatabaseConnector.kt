@@ -18,11 +18,14 @@ object DatabaseConnector: OnEnable {
         return sql.checkConnect()
     }
 
-    fun createTable() {
-        sql?.use {
-            executeUpdate("CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));")
-            executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);")
-        }
+    fun createTable(): ConnectState {
+        return sql?.run {
+            use {
+                executeUpdate("CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));")
+                executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);")
+            } ?: return ConnectState.CatchException
+            ConnectState.Success
+        } ?: ConnectState.NullError
     }
 
     object JobExp {
