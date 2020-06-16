@@ -32,7 +32,8 @@ object DatabaseConnector: OnEnable {
         private val jobExpCache = mutableMapOf<Pair<UUIDPlayer, JobData>, Int?>()
 
         fun get(
-            uuidPlayer: UUIDPlayer, jobData: JobData
+            uuidPlayer: UUIDPlayer,
+            jobData: JobData
         ): Int? {
             return jobExpCache[uuidPlayer to jobData]
         }
@@ -58,7 +59,9 @@ object DatabaseConnector: OnEnable {
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, jobData: JobData, exp: Int
+            uuidPlayer: UUIDPlayer,
+            jobData: JobData,
+            exp: Int
         ) {
             sql?.use {
                 executeQuery(
@@ -96,7 +99,8 @@ object DatabaseConnector: OnEnable {
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, jobData: JobData?
+            uuidPlayer: UUIDPlayer,
+            jobData: JobData?
         ) {
             val id = jobData?.id
             sql?.use {
@@ -135,7 +139,8 @@ object DatabaseConnector: OnEnable {
         }
 
         fun set(
-            uuidPlayer: UUIDPlayer, point: Int
+            uuidPlayer: UUIDPlayer,
+            point: Int
         ) {
             sql?.use {
                 executeQuery(

@@ -12,7 +12,11 @@ data class PassiveSkill(
     val changeType: StatusChange.Type,
     val extraSkill: Boolean
 ) {
-    fun apply(level: Int, isActive: Boolean, playerStatus: PlayerStatus) {
+    fun apply(
+        level: Int,
+        isActive: Boolean,
+        playerStatus: PlayerStatus
+    ) {
         if (isAvailable(level)) {
             val cause = when {
                 isActive -> Cause.PassiveSkillMain

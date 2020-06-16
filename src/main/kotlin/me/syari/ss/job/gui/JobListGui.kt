@@ -19,7 +19,8 @@ import org.bukkit.inventory.ItemFlag
 
 object JobListGui {
     fun openList(
-        player: Player, page: Int
+        player: Player,
+        page: Int
     ) {
         getByIndex(page)?.let {
             openList(
@@ -29,7 +30,9 @@ object JobListGui {
     }
 
     private fun openList(
-        player: Player, page: Int, grade: JobGrade
+        player: Player,
+        page: Int,
+        grade: JobGrade
     ) {
         inventory(
             "&9&lジョブ一覧 &7- &9&l${grade.groupName}", 2, "job", "list", grade.groupName
@@ -69,7 +72,11 @@ object JobListGui {
     }
 
     private fun CustomInventory.setJobItem(
-        slot: Int, player: Player, jobData: JobData, page: Int, grade: JobGrade
+        slot: Int,
+        player: Player,
+        jobData: JobData,
+        page: Int,
+        grade: JobGrade
     ) {
         val playerData = player.jobData
         val playerJob = playerData.getJob(jobData)
@@ -158,7 +165,10 @@ object JobListGui {
     }
 
     private fun changeJob(
-        player: Player, jobData: JobData, playerData: PlayerData, playerJobData: PlayerJobData
+        player: Player,
+        jobData: JobData,
+        playerData: PlayerData,
+        playerJobData: PlayerJobData
     ) {
         close(player)
         player.title(

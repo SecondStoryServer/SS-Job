@@ -4,7 +4,8 @@ import me.syari.ss.job.DatabaseConnector
 import me.syari.ss.job.grade.JobData
 
 data class PlayerJobData(
-    val playerData: PlayerData, val data: JobData
+    val playerData: PlayerData,
+    val data: JobData
 ) {
     var level = getLevelFromExp(exp)
     private var expToLevel = getExpFromLevel(level - 1)

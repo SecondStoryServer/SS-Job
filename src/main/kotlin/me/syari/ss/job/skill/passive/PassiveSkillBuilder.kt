@@ -7,7 +7,11 @@ class PassiveSkillBuilder {
     private val list = mutableListOf<PassiveSkill>()
 
     fun add(
-        needLevel: Int, statusType: StatusType, value: Float, changeType: StatusChange.Type, extraSkill: Boolean = false
+        needLevel: Int,
+        statusType: StatusType,
+        value: Float,
+        changeType: StatusChange.Type,
+        extraSkill: Boolean = false
     ) {
         add(needLevel, listOf(statusType), value, changeType, extraSkill)
     }
