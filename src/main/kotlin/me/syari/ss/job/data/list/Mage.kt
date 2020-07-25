@@ -1,8 +1,8 @@
-package me.syari.ss.job.grade.battle
+package me.syari.ss.job.data.list
 
 import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
-import me.syari.ss.job.grade.JobData
-import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
+import me.syari.ss.job.data.JobData
+import me.syari.ss.job.skill.ActiveSkillBuilder.Companion.buildActiveSkill
 import org.bukkit.Material
 
 object Mage: JobData {
@@ -10,6 +10,7 @@ object Mage: JobData {
     override val display = "メイジ"
     override val icon = Material.WOODEN_HOE
     override val description = "遠距離から魔法を放つジョブ"
+    override val defaultAvailable = true
     override val availableWeaponType = setOf(
         WeaponType.Wand
     )

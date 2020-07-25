@@ -1,10 +1,10 @@
-package me.syari.ss.job.skill.active.grade1
+package me.syari.ss.job.skill.list
 
 import me.syari.ss.battle.status.StatusType
 import me.syari.ss.battle.status.player.PlayerStatus.Companion.status
 import me.syari.ss.battle.status.player.StatusChange.Cause
 import me.syari.ss.battle.status.player.StatusChange.Type
-import me.syari.ss.job.skill.active.ActiveSkill
+import me.syari.ss.job.skill.ActiveSkill
 import org.bukkit.Material
 import org.bukkit.entity.Player
 

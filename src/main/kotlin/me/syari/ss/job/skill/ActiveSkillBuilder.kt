@@ -1,4 +1,4 @@
-package me.syari.ss.job.skill.active
+package me.syari.ss.job.skill
 
 class ActiveSkillBuilder {
     private val skills = mutableMapOf<ActiveSkill.Type, ActiveSkill>()

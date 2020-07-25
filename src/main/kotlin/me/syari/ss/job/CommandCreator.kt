@@ -9,13 +9,13 @@ import me.syari.ss.core.command.create.ErrorMessage
 import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.job.ConfigLoader.loadConfig
 import me.syari.ss.job.DatabaseConnector.ActiveJob
-import me.syari.ss.job.DatabaseConnector.JobExp
-import me.syari.ss.job.DatabaseConnector.JobPoint
+import me.syari.ss.job.DatabaseConnector.JobLevel
+import me.syari.ss.job.DatabaseConnector.StatusPoint
 import me.syari.ss.job.DatabaseConnector.createTable
 import me.syari.ss.job.Main.Companion.jobPlugin
 import me.syari.ss.job.gui.JobListGui
-import me.syari.ss.job.player.PlayerData
-import me.syari.ss.job.player.PlayerData.Companion.jobData
+import me.syari.ss.job.player.PlayerJob
+import me.syari.ss.job.player.PlayerJob.Companion.jobData
 import org.bukkit.entity.Player
 
 object CommandCreator: OnEnable {
@@ -75,17 +75,17 @@ object CommandCreator: OnEnable {
                                         3, false
                                     ) ?: return@createCommand
                                     val uuidPlayer = UUIDPlayer(player)
-                                    JobExp.deleteCache(uuidPlayer)
+                                    JobLevel.deleteCache(uuidPlayer)
                                     ActiveJob.deleteCache(uuidPlayer)
-                                    JobPoint.deleteCache(uuidPlayer)
-                                    PlayerData.deleteCache(uuidPlayer)
+                                    StatusPoint.deleteCache(uuidPlayer)
+                                    PlayerJob.deleteCache(uuidPlayer)
                                     sendWithPrefix("&6${player.name} &fのキャッシュを削除しました")
                                 }
                                 "clear" -> {
-                                    JobExp.clearCache()
+                                    JobLevel.clearCache()
                                     ActiveJob.clearCache()
-                                    JobPoint.clearCache()
-                                    PlayerData.clearCache()
+                                    StatusPoint.clearCache()
+                                    PlayerJob.clearCache()
                                     sendWithPrefix("&f全てのキャッシュを削除しました")
                                 }
                             }
@@ -120,9 +120,7 @@ object CommandCreator: OnEnable {
                 }
                 "open" -> {
                     if (sender !is Player) return@createCommand sendError(ErrorMessage.OnlyPlayer)
-                    JobListGui.openList(
-                        sender, 0
-                    )
+                    JobListGui.openList(sender)
                 }
             }
         }

@@ -5,7 +5,7 @@ import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.core.sql.ConnectState
 import me.syari.ss.core.sql.ConnectState.Companion.checkConnect
 import me.syari.ss.core.sql.MySQL
-import me.syari.ss.job.grade.JobData
+import me.syari.ss.job.data.JobData
 
 object DatabaseConnector: OnEnable {
     override fun onEnable() {
@@ -21,37 +21,39 @@ object DatabaseConnector: OnEnable {
     fun createTable(): ConnectState {
         return sql?.run {
             use {
-                executeUpdate("CREATE TABLE IF NOT EXISTS JobExp(UUID VARCHAR(36), JobId VARCHAR(255), Exp INT, PRIMARY KEY(UUID, JobId));")
-                executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, JobId VARCHAR(255), JobPoint INT);")
+                executeUpdate("CREATE TABLE IF NOT EXISTS JobLevel(UUID VARCHAR(36), JobId VARCHAR(255), Level INT, PRIMARY KEY(UUID, JobId));")
+                executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, ActiveJob VARCHAR(255), StatusPoint INT);")
             } ?: return ConnectState.CatchException
             ConnectState.Success
         } ?: ConnectState.NullError
     }
 
-    object JobExp {
-        private val jobExpCache = mutableMapOf<Pair<UUIDPlayer, JobData>, Int?>()
+    object JobLevel {
+        private val jobLevelCache = mutableMapOf<Pair<UUIDPlayer, JobData>, Int?>()
 
         fun get(
             uuidPlayer: UUIDPlayer,
             jobData: JobData
         ): Int? {
-            return jobExpCache[uuidPlayer to jobData]
+            return jobLevelCache[uuidPlayer to jobData]
         }
+
+        private val defaultAvailableJobList = JobData.jobList.filter { it.defaultAvailable }.map { it to 0 }.toMap()
 
         fun getJobList(
             uuidPlayer: UUIDPlayer
-        ): List<JobData> {
-            return mutableListOf<JobData>().apply {
+        ): Map<JobData, Int> {
+            return defaultAvailableJobList.toMutableMap().apply {
                 sql?.use {
                     val result = executeQuery(
-                        "SELECT JobId, Exp FROM JobExp WHERE UUID = '$uuidPlayer';"
+                        "SELECT JobId, Level FROM JobLevel WHERE UUID = '$uuidPlayer';"
                     )
                     while (result.next()) {
                         val jobId = result.getString(1)
                         JobData.getById(jobId)?.let { jobData ->
-                            val exp = result.getInt(2)
-                            jobExpCache[uuidPlayer to jobData] = exp
-                            add(jobData)
+                            val level = result.getInt(2)
+                            jobLevelCache[uuidPlayer to jobData] = level
+                            this@apply[jobData] = level
                         }
                     }
                 }
@@ -61,22 +63,22 @@ object DatabaseConnector: OnEnable {
         fun set(
             uuidPlayer: UUIDPlayer,
             jobData: JobData,
-            exp: Int
+            level: Int
         ) {
             sql?.use {
                 executeQuery(
-                    "INSERT INTO JobExp VALUE ('$uuidPlayer', '${jobData.id}', $exp) ON DUPLICATE KEY UPDATE Exp = '$exp';"
+                    "INSERT INTO JobLevel VALUE ('$uuidPlayer', '${jobData.id}', $level) ON DUPLICATE KEY UPDATE Level = '$level';"
                 )
             }
-            jobExpCache[uuidPlayer to jobData] = exp
+            jobLevelCache[uuidPlayer to jobData] = level
         }
 
         fun deleteCache(uuidPlayer: UUIDPlayer) {
-            jobExpCache.keys.removeIf { it.first == uuidPlayer }
+            jobLevelCache.keys.removeIf { it.first == uuidPlayer }
         }
 
         fun clearCache() {
-            jobExpCache.clear()
+            jobLevelCache.clear()
         }
     }
 
@@ -90,7 +92,7 @@ object DatabaseConnector: OnEnable {
         private fun getFromSQL(uuidPlayer: UUIDPlayer): JobData? {
             var id: String? = null
             sql?.use {
-                val result = executeQuery("SELECT JobId FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
+                val result = executeQuery("SELECT ActiveJob FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
                 if (result.next()) {
                     id = result.getString(1)
                 }
@@ -105,7 +107,7 @@ object DatabaseConnector: OnEnable {
             val id = jobData?.id
             sql?.use {
                 executeQuery(
-                    "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE JobId = '$id';"
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE ActiveJob = '$id';"
                 )
             }
             activeJobCache[uuidPlayer] = jobData
@@ -120,17 +122,17 @@ object DatabaseConnector: OnEnable {
         }
     }
 
-    object JobPoint {
-        private val jobPointCache = mutableMapOf<UUIDPlayer, Int>()
+    object StatusPoint {
+        private val statusPointCache = mutableMapOf<UUIDPlayer, Int>()
 
         fun get(uuidPlayer: UUIDPlayer): Int {
-            return jobPointCache.getOrPut(uuidPlayer) { getFromSQL(uuidPlayer) }
+            return statusPointCache.getOrPut(uuidPlayer) { getFromSQL(uuidPlayer) }
         }
 
         private fun getFromSQL(uuidPlayer: UUIDPlayer): Int {
             var point = 0
             sql?.use {
-                val result = executeQuery("SELECT JobPoint FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
+                val result = executeQuery("SELECT StatusPoint FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
                 if (result.next()) {
                     point = result.getInt(1)
                 }
@@ -144,18 +146,18 @@ object DatabaseConnector: OnEnable {
         ) {
             sql?.use {
                 executeQuery(
-                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, $point) ON DUPLICATE KEY UPDATE JobPoint = $point;"
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, $point) ON DUPLICATE KEY UPDATE StatusPoint = $point;"
                 )
             }
-            jobPointCache[uuidPlayer] = point
+            statusPointCache[uuidPlayer] = point
         }
 
         fun deleteCache(uuidPlayer: UUIDPlayer) {
-            jobPointCache.remove(uuidPlayer)
+            statusPointCache.remove(uuidPlayer)
         }
 
         fun clearCache() {
-            jobPointCache.clear()
+            statusPointCache.clear()
         }
     }
 }
