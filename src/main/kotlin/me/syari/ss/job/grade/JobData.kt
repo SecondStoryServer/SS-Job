@@ -13,7 +13,7 @@ interface JobData {
     val description: String
     val availableWeaponType: Set<WeaponType>
     val requirements: Set<Requirement>?
-    val activeSkill: List<ActiveSkill>
+    val activeSkill: Map<ActiveSkill.Type, ActiveSkill>
     val passiveSkill: List<PassiveSkill>
 
     companion object {

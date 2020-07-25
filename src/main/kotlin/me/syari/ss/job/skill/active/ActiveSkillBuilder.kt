@@ -1,18 +1,18 @@
 package me.syari.ss.job.skill.active
 
 class ActiveSkillBuilder {
-    private val list = mutableListOf<ActiveSkill>()
+    private val skills = mutableMapOf<ActiveSkill.Type, ActiveSkill>()
 
-    fun add(activeSkill: ActiveSkill) {
-        list.add(activeSkill)
+    fun set(type: ActiveSkill.Type, activeSkill: ActiveSkill) {
+        skills[type] = activeSkill
     }
 
-    fun build(): List<ActiveSkill> {
-        return list
+    fun build(): Map<ActiveSkill.Type, ActiveSkill> {
+        return skills
     }
 
     companion object {
-        fun buildActiveSkill(run: ActiveSkillBuilder.() -> Unit): List<ActiveSkill> {
+        fun buildActiveSkill(run: ActiveSkillBuilder.() -> Unit): Map<ActiveSkill.Type, ActiveSkill> {
             return ActiveSkillBuilder().apply(run).build()
         }
     }

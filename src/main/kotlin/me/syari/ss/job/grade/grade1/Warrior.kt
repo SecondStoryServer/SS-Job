@@ -6,6 +6,7 @@ import me.syari.ss.battle.status.player.StatusChange.Type.Multi
 import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobData
 import me.syari.ss.job.grade.Requirement
+import me.syari.ss.job.skill.active.ActiveSkill
 import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
 import me.syari.ss.job.skill.active.grade1.ActiveBerserk
 import me.syari.ss.job.skill.passive.PassiveSkillBuilder.Companion.buildPassiveSkill
@@ -23,7 +24,7 @@ object Warrior: JobData {
 
     )
     override val activeSkill = buildActiveSkill {
-        add(ActiveBerserk)
+        set(ActiveSkill.Type.RightRightRight, ActiveBerserk)
     }
     override val passiveSkill = buildPassiveSkill {
         add(1, StatusType.allAttack, 3F, Add)
