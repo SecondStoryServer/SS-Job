@@ -1,8 +1,7 @@
-package me.syari.ss.job.grade.grade1
+package me.syari.ss.job.grade.battle
 
 import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobData
-import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
 import org.bukkit.Material
 
@@ -16,9 +15,6 @@ object Ranger: JobData {
     """.trimIndent()
     override val availableWeaponType = setOf(
         WeaponType.Bow, WeaponType.Knife
-    )
-    override val requirements = setOf<Requirement>(
-
     )
     override val activeSkill = buildActiveSkill {
 
