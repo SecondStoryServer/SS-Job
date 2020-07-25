@@ -6,7 +6,6 @@ import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.grade.grade1.Fighter
 import me.syari.ss.job.grade.grade1.Warrior
 import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
-import me.syari.ss.job.skill.passive.PassiveSkillBuilder.Companion.buildPassiveSkill
 import org.bukkit.Material
 
 object Berserker: JobData {
@@ -21,9 +20,6 @@ object Berserker: JobData {
         Requirement.Job(Warrior), Requirement.Job(Fighter)
     )
     override val activeSkill = buildActiveSkill {
-
-    }
-    override val passiveSkill = buildPassiveSkill {
 
     }
 }

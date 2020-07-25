@@ -6,7 +6,6 @@ import me.syari.ss.job.grade.Requirement
 import me.syari.ss.job.grade.grade1.Bard
 import me.syari.ss.job.grade.grade1.Ranger
 import me.syari.ss.job.skill.active.ActiveSkillBuilder.Companion.buildActiveSkill
-import me.syari.ss.job.skill.passive.PassiveSkillBuilder.Companion.buildPassiveSkill
 import org.bukkit.Material
 
 object Thief: JobData {
@@ -21,9 +20,6 @@ object Thief: JobData {
         Requirement.Job(Ranger), Requirement.Job(Bard)
     )
     override val activeSkill = buildActiveSkill {
-
-    }
-    override val passiveSkill = buildPassiveSkill {
 
     }
 }

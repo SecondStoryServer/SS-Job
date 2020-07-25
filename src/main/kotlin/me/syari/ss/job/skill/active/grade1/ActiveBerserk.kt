@@ -13,8 +13,6 @@ object ActiveBerserk: ActiveSkill {
     override val display = "バーサーク"
     override val description = "動きが遅くなる代わりに攻撃力が +300% 上昇させる"
     override val coolTime = 3 * 60 * 20
-    override val needLevel = 5
-    override val extraSkill = false
 
     override fun use(player: Player) {
         val playerStatus = player.status

@@ -3,7 +3,6 @@ package me.syari.ss.job.grade
 import me.syari.ss.item.itemRegister.equip.weapon.WeaponType
 import me.syari.ss.job.grade.JobGrade.Companion.gradeList
 import me.syari.ss.job.skill.active.ActiveSkill
-import me.syari.ss.job.skill.passive.PassiveSkill
 import org.bukkit.Material
 
 interface JobData {
@@ -14,7 +13,6 @@ interface JobData {
     val availableWeaponType: Set<WeaponType>
     val requirements: Set<Requirement>?
     val activeSkill: Map<ActiveSkill.Type, ActiveSkill>
-    val passiveSkill: List<PassiveSkill>
 
     companion object {
         val jobList = gradeList.flatMap { it.jobList.keys }

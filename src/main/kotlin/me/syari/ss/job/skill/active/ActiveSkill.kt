@@ -8,25 +8,12 @@ interface ActiveSkill {
     val display: String
     val description: String
     val coolTime: Int
-    val needLevel: Int
-    val extraSkill: Boolean
     fun use(player: Player)
 
-    data class Type(val first: ClickType, val second: ClickType, val third: ClickType) {
-        override fun toString(): String {
-            return "$first $second $third"
-        }
-
-        companion object {
-            val RightRightRight = Type(ClickType.Right, ClickType.Right, ClickType.Right)
-            val RightLeftRight = Type(ClickType.Left, ClickType.Left, ClickType.Right)
-            val RightLeftLeft = Type(ClickType.Right, ClickType.Left, ClickType.Left)
-        }
-    }
-
-    enum class ClickType(val toString: String) {
-        Right("R"),
-        Left("L");
+    enum class Type(val toString: String) {
+        RightMouseButton("RMB"),
+        KeyQ("Q"),
+        KeyF("F");
 
         override fun toString(): String {
             return toString
