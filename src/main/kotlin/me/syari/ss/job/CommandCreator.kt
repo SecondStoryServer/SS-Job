@@ -6,15 +6,10 @@ import me.syari.ss.core.command.create.CreateCommand.element
 import me.syari.ss.core.command.create.CreateCommand.offlinePlayers
 import me.syari.ss.core.command.create.CreateCommand.tab
 import me.syari.ss.core.command.create.ErrorMessage
-import me.syari.ss.core.player.UUIDPlayer
 import me.syari.ss.job.ConfigLoader.loadConfig
-import me.syari.ss.job.DatabaseConnector.ActiveJob
-import me.syari.ss.job.DatabaseConnector.JobLevel
-import me.syari.ss.job.DatabaseConnector.StatusPoint
 import me.syari.ss.job.DatabaseConnector.createTable
 import me.syari.ss.job.Main.Companion.jobPlugin
 import me.syari.ss.job.gui.JobListGui
-import me.syari.ss.job.player.PlayerJob
 import me.syari.ss.job.player.PlayerJob.Companion.jobData
 import org.bukkit.entity.Player
 
@@ -74,18 +69,11 @@ object CommandCreator: OnEnable {
                                     val player = args.getOfflinePlayer(
                                         3, false
                                     ) ?: return@createCommand
-                                    val uuidPlayer = UUIDPlayer(player)
-                                    JobLevel.deleteCache(uuidPlayer)
-                                    ActiveJob.deleteCache(uuidPlayer)
-                                    StatusPoint.deleteCache(uuidPlayer)
-                                    PlayerJob.deleteCache(uuidPlayer)
+                                    DatabaseConnector.deleteCache(player)
                                     sendWithPrefix("&6${player.name} &fのキャッシュを削除しました")
                                 }
                                 "clear" -> {
-                                    JobLevel.clearCache()
-                                    ActiveJob.clearCache()
-                                    StatusPoint.clearCache()
-                                    PlayerJob.clearCache()
+                                    DatabaseConnector.clearCache()
                                     sendWithPrefix("&f全てのキャッシュを削除しました")
                                 }
                             }

@@ -6,6 +6,8 @@ import me.syari.ss.core.sql.ConnectState
 import me.syari.ss.core.sql.ConnectState.Companion.checkConnect
 import me.syari.ss.core.sql.MySQL
 import me.syari.ss.job.data.JobData
+import me.syari.ss.job.player.PlayerJob
+import org.bukkit.OfflinePlayer
 
 object DatabaseConnector: OnEnable {
     override fun onEnable() {
@@ -22,10 +24,30 @@ object DatabaseConnector: OnEnable {
         return sql?.run {
             use {
                 executeUpdate("CREATE TABLE IF NOT EXISTS JobLevel(UUID VARCHAR(36), JobId VARCHAR(255), Level INT, PRIMARY KEY(UUID, JobId));")
-                executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, ActiveJob VARCHAR(255), StatusPoint INT);")
+                executeUpdate("CREATE TABLE IF NOT EXISTS JobData(UUID VARCHAR(36) PRIMARY KEY, ActiveJob VARCHAR(255), PlayerLevel INT, StatusPoint INT);")
             } ?: return ConnectState.CatchException
             ConnectState.Success
         } ?: ConnectState.NullError
+    }
+
+    fun deleteCache(player: OfflinePlayer) {
+        deleteCache(UUIDPlayer(player))
+    }
+
+    fun deleteCache(uuidPlayer: UUIDPlayer) {
+        JobLevel.deleteCache(uuidPlayer)
+        ActiveJob.deleteCache(uuidPlayer)
+        StatusPoint.deleteCache(uuidPlayer)
+        PlayerJob.deleteCache(uuidPlayer)
+        PlayerLevel.deleteCache(uuidPlayer)
+    }
+
+    fun clearCache() {
+        JobLevel.clearCache()
+        ActiveJob.clearCache()
+        StatusPoint.clearCache()
+        PlayerJob.clearCache()
+        PlayerLevel.clearCache()
     }
 
     object JobLevel {
@@ -107,7 +129,7 @@ object DatabaseConnector: OnEnable {
             val id = jobData?.id
             sql?.use {
                 executeQuery(
-                    "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0) ON DUPLICATE KEY UPDATE ActiveJob = '$id';"
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', '$id', 0, 0) ON DUPLICATE KEY UPDATE ActiveJob = '$id';"
                 )
             }
             activeJobCache[uuidPlayer] = jobData
@@ -146,7 +168,7 @@ object DatabaseConnector: OnEnable {
         ) {
             sql?.use {
                 executeQuery(
-                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, $point) ON DUPLICATE KEY UPDATE StatusPoint = $point;"
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, 0, $point) ON DUPLICATE KEY UPDATE StatusPoint = $point;"
                 )
             }
             statusPointCache[uuidPlayer] = point
@@ -158,6 +180,45 @@ object DatabaseConnector: OnEnable {
 
         fun clearCache() {
             statusPointCache.clear()
+        }
+    }
+
+    object PlayerLevel {
+        private val playerLevelCache = mutableMapOf<UUIDPlayer, Int>()
+
+        fun get(uuidPlayer: UUIDPlayer): Int {
+            return playerLevelCache.getOrPut(uuidPlayer) { getFromSQL(uuidPlayer) }
+        }
+
+        private fun getFromSQL(uuidPlayer: UUIDPlayer): Int {
+            var point = 0
+            sql?.use {
+                val result = executeQuery("SELECT PlayerLevel FROM JobData WHERE UUID = '$uuidPlayer' LIMIT 1;")
+                if (result.next()) {
+                    point = result.getInt(1)
+                }
+            }
+            return point
+        }
+
+        fun set(
+            uuidPlayer: UUIDPlayer,
+            level: Int
+        ) {
+            sql?.use {
+                executeQuery(
+                    "INSERT INTO JobData VALUE ('$uuidPlayer', null, $level, 0) ON DUPLICATE KEY UPDATE PlayerLevel = $level;"
+                )
+            }
+            playerLevelCache[uuidPlayer] = level
+        }
+
+        fun deleteCache(uuidPlayer: UUIDPlayer) {
+            playerLevelCache.remove(uuidPlayer)
+        }
+
+        fun clearCache() {
+            playerLevelCache.clear()
         }
     }
 }
